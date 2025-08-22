@@ -1,0 +1,244 @@
+/* eslint-disable */
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  DateTime: { input: any; output: any; }
+};
+
+/** Comments */
+export type Comment = {
+  __typename?: 'Comment';
+  /** Text content of the comment */
+  content: Scalars['String']['output'];
+  /** Creation timestamp */
+  createdAt: Scalars['DateTime']['output'];
+  /** Unique comment identifier */
+  id: Scalars['ID']['output'];
+  /** Author's username */
+  username: Scalars['String']['output'];
+};
+
+export type CreateCommentInput = {
+  /** Text body of the comment */
+  content: Scalars['String']['input'];
+  /** Identifier of the post to comment on */
+  postId: Scalars['Int']['input'];
+};
+
+export type CreateCommentResponse = {
+  __typename?: 'CreateCommentResponse';
+  /** HTTP-like status code */
+  code: Scalars['Int']['output'];
+  /** The created comment, if successful */
+  comment?: Maybe<Comment>;
+  /** Human-readable status message */
+  message: Scalars['String']['output'];
+  /** Indicates whether the operation succeeded */
+  success: Scalars['Boolean']['output'];
+};
+
+export type CreatePostInput = {
+  /** Text body for the new post */
+  content: Scalars['String']['input'];
+};
+
+export type CreatePostResponse = {
+  __typename?: 'CreatePostResponse';
+  /** HTTP-like status code */
+  code: Scalars['Int']['output'];
+  /** Human-readable status message */
+  message: Scalars['String']['output'];
+  /** The created post, if successful */
+  post?: Maybe<Post>;
+  /** Indicates whether the operation succeeded */
+  success: Scalars['Boolean']['output'];
+};
+
+export type DeleteCommentResponse = {
+  __typename?: 'DeleteCommentResponse';
+  /** HTTP-like status code */
+  code: Scalars['Int']['output'];
+  /** Identifier of the deleted comment */
+  commentId?: Maybe<Scalars['Int']['output']>;
+  /** Human-readable status message */
+  message: Scalars['String']['output'];
+  /** Indicates whether the operation succeeded */
+  success: Scalars['Boolean']['output'];
+};
+
+export type DeletePostResponse = {
+  __typename?: 'DeletePostResponse';
+  /** HTTP-like status code */
+  code: Scalars['Int']['output'];
+  /** Human-readable status message */
+  message: Scalars['String']['output'];
+  /** Identifier of the deleted post */
+  postId?: Maybe<Scalars['Int']['output']>;
+  /** Indicates whether the operation succeeded */
+  success: Scalars['Boolean']['output'];
+};
+
+/** Likes */
+export type LikePostResponse = {
+  __typename?: 'LikePostResponse';
+  /** HTTP-like status code */
+  code: Scalars['Int']['output'];
+  /** Human-readable status message */
+  message: Scalars['String']['output'];
+  /** Post with updated like counts */
+  post?: Maybe<Post>;
+  /** Indicates whether the operation succeeded */
+  success: Scalars['Boolean']['output'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  /** Create a new comment on a post */
+  createComment: CreateCommentResponse;
+  /** Create a new post */
+  createPost: CreatePostResponse;
+  /** Delete a comment by its identifier */
+  deleteComment: DeleteCommentResponse;
+  /** Delete a post by its identifier */
+  deletePost: DeletePostResponse;
+  /** Add a like to a post */
+  likePost: LikePostResponse;
+  /** Remove a like from a post */
+  unlikePost: LikePostResponse;
+};
+
+
+export type MutationCreateCommentArgs = {
+  input: CreateCommentInput;
+};
+
+
+export type MutationCreatePostArgs = {
+  input: CreatePostInput;
+};
+
+
+export type MutationDeleteCommentArgs = {
+  commentId: Scalars['Int']['input'];
+};
+
+
+export type MutationDeletePostArgs = {
+  postId: Scalars['Int']['input'];
+};
+
+
+export type MutationLikePostArgs = {
+  postId: Scalars['Int']['input'];
+};
+
+
+export type MutationUnlikePostArgs = {
+  postId: Scalars['Int']['input'];
+};
+
+/** Posts */
+export type Post = {
+  __typename?: 'Post';
+  /** Number of comments on this post */
+  commentsCount: Scalars['Int']['output'];
+  /** Text content of the post */
+  content: Scalars['String']['output'];
+  /** Creation timestamp */
+  createdAt: Scalars['DateTime']['output'];
+  /** Unique post identifier */
+  id: Scalars['ID']['output'];
+  /** Number of likes on this post */
+  likesCount: Scalars['Int']['output'];
+  /** Author's username */
+  username: Scalars['String']['output'];
+};
+
+/** Queries */
+export type Query = {
+  __typename?: 'Query';
+  /** List comments for a specific post */
+  comments: Array<Comment>;
+  /** List all posts */
+  posts: Array<Post>;
+};
+
+
+/** Queries */
+export type QueryCommentsArgs = {
+  postId: Scalars['Int']['input'];
+};
+
+export type QueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type QueryQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, content: string, createdAt: any, likesCount: number, commentsCount: number }> };
+
+export type GetPostCommentsQueryVariables = Exact<{
+  postId: Scalars['Int']['input'];
+}>;
+
+
+export type GetPostCommentsQuery = { __typename?: 'Query', comments: Array<{ __typename?: 'Comment', id: string, content: string, createdAt: any, username: string }> };
+
+export type CreateCommentMutationVariables = Exact<{
+  input: CreateCommentInput;
+}>;
+
+
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'CreateCommentResponse', code: number, success: boolean, message: string, comment?: { __typename?: 'Comment', id: string, content: string, createdAt: any, username: string } | null } };
+
+export type DeleteCommentMutationVariables = Exact<{
+  commentId: Scalars['Int']['input'];
+}>;
+
+
+export type DeleteCommentMutation = { __typename?: 'Mutation', deleteComment: { __typename?: 'DeleteCommentResponse', code: number, success: boolean, message: string, commentId?: number | null } };
+
+export type GetPostsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, content: string, createdAt: any, username: string, likesCount: number, commentsCount: number }> };
+
+export type CreatePostMutationVariables = Exact<{
+  input: CreatePostInput;
+}>;
+
+
+export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'CreatePostResponse', code: number, success: boolean, message: string, post?: { __typename?: 'Post', id: string, content: string, createdAt: any, username: string, likesCount: number, commentsCount: number } | null } };
+
+export type DeletePostMutationVariables = Exact<{
+  postId: Scalars['Int']['input'];
+}>;
+
+
+export type DeletePostMutation = { __typename?: 'Mutation', deletePost: { __typename?: 'DeletePostResponse', code: number, success: boolean, message: string, postId?: number | null } };
+
+export type LikePostMutationVariables = Exact<{
+  postId: Scalars['Int']['input'];
+}>;
+
+
+export type LikePostMutation = { __typename?: 'Mutation', likePost: { __typename?: 'LikePostResponse', code: number, success: boolean, message: string, post?: { __typename?: 'Post', id: string, content: string, createdAt: any, username: string, likesCount: number, commentsCount: number } | null } };
+
+
+export const QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Query"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"commentsCount"}}]}}]}}]} as unknown as DocumentNode<QueryQuery, QueryQueryVariables>;
+export const GetPostCommentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPostComments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"postId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"postId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"postId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<GetPostCommentsQuery, GetPostCommentsQueryVariables>;
+export const CreateCommentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateComment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateCommentInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createComment"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"comment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<CreateCommentMutation, CreateCommentMutationVariables>;
+export const DeleteCommentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteComment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"commentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteComment"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"commentId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"commentId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"commentId"}}]}}]}}]} as unknown as DocumentNode<DeleteCommentMutation, DeleteCommentMutationVariables>;
+export const GetPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"commentsCount"}}]}}]}}]} as unknown as DocumentNode<GetPostsQuery, GetPostsQueryVariables>;
+export const CreatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatePostInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"commentsCount"}}]}}]}}]}}]} as unknown as DocumentNode<CreatePostMutation, CreatePostMutationVariables>;
+export const DeletePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"postId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deletePost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"postId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"postId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"postId"}}]}}]}}]} as unknown as DocumentNode<DeletePostMutation, DeletePostMutationVariables>;
+export const LikePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LikePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"postId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"likePost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"postId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"postId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"likesCount"}},{"kind":"Field","name":{"kind":"Name","value":"commentsCount"}}]}}]}}]}}]} as unknown as DocumentNode<LikePostMutation, LikePostMutationVariables>;

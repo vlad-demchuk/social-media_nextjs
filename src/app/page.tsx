@@ -3,13 +3,23 @@ import heroImage from "@/assets/auth-hero.jpg";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { query } from "@/lib/graphql/apolloClient";
+import { gql } from "@/graphql/generated";
 
-export default function RootPage() {
+
+export default async function RootPage() {
+
   return (
     <div className="min-h-screen bg-gradient-hero">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-      <Image src={heroImage} alt="" fill className="object-cover opacity-20" priority />
+        <Image
+          src={heroImage}
+          alt=""
+          fill
+          className="object-cover opacity-20"
+          priority
+        />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
