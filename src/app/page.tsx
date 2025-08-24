@@ -3,9 +3,6 @@ import heroImage from "@/assets/auth-hero.jpg";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { query } from "@/lib/graphql/apolloClient";
-import { gql } from "@/graphql/generated";
-
 
 export default async function RootPage() {
 
