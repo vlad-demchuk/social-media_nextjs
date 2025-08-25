@@ -1,6 +1,3 @@
-'use client';
-
-import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,141 +17,96 @@ import {
   User,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Post } from '@/graphql/generated/graphql';
+import { query } from '@/lib/graphql/apolloClient';
+import { GET_POSTS } from '@/graphql/queries/post';
+import { Suspense } from 'react';
+import Posts from '@/features/posts/components';
+import { CreateForm } from '@/features/posts/components/create-form';
 
-interface Post {
-  id: string;
-  author: {
-    name: string;
-    username: string;
-    avatar: string;
-  };
-  content: string;
-  timestamp: string;
-  likes: number;
-  comments: number;
-  reposts: number;
-  liked: boolean;
-  reposted: boolean;
-}
 
-export default function FeedPage() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [newPost, setNewPost] = useState("");
-  const { toast } = useToast();
+// interface Post {
+//   id: string;
+//   author: {
+//     name: string;
+//     username: string;
+//     avatar: string;
+//   };
+//   content: string;
+//   timestamp: string;
+//   likes: number;
+//   comments: number;
+//   reposts: number;
+//   liked: boolean;
+//   reposted: boolean;
+// }
 
-  useEffect(() => {
-    // Mock initial posts
-    setPosts([
-      {
-        id: "1",
-        author: {
-          name: "Sarah Chen",
-          username: "@sarahchen",
-          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=sarah",
-        },
-        content:
-          "Just shipped a new feature that I'm really excited about! The team worked incredibly hard on this one. 🚀",
-        timestamp: "2h",
-        likes: 24,
-        comments: 5,
-        reposts: 3,
-        liked: false,
-        reposted: false,
-      },
-      {
-        id: "2",
-        author: {
-          name: "Alex Johnson",
-          username: "@alexj",
-          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=alex",
-        },
-        content:
-          "Beautiful sunset from my evening walk. Sometimes you need to step away from the screen and enjoy the simple things in life. ✨",
-        timestamp: "4h",
-        likes: 42,
-        comments: 8,
-        reposts: 12,
-        liked: true,
-        reposted: false,
-      },
-      {
-        id: "3",
-        author: {
-          name: "Marcus Rodriguez",
-          username: "@marcus_dev",
-          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=marcus",
-        },
-        content:
-          "Hot take: The best code is the code you don't have to write. Spent today removing 200 lines while adding a new feature. Less is more! 💡",
-        timestamp: "6h",
-        likes: 89,
-        comments: 23,
-        reposts: 31,
-        liked: true,
-        reposted: true,
-      },
-    ]);
-  }, []);
+export default async function FeedPage() {
+  // const [posts, setPosts] = useState<Post[]>([]);
+  // const [newPost, setNewPost] = useState("");
+  // const { toast } = useToast();
 
   const handleCreatePost = () => {
-    if (!newPost.trim()) return;
-
-    const post: Post = {
-      id: Date.now().toString(),
-      author: {
-        name: "You",
-        username: "@you",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=you",
-      },
-      content: newPost,
-      timestamp: "now",
-      likes: 0,
-      comments: 0,
-      reposts: 0,
-      liked: false,
-      reposted: false,
-    };
-
-    setPosts([post, ...posts]);
-    setNewPost("");
-    toast({
-      title: "Post created!",
-      description: "Your post has been shared with your followers.",
-    });
+    // if (!newPost.trim()) return;
+    //
+    // const post: Post = {
+    //   id: Date.now().toString(),
+    //   author: {
+    //     name: "You",
+    //     username: "@you",
+    //     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=you",
+    //   },
+    //   content: newPost,
+    //   timestamp: "now",
+    //   likes: 0,
+    //   comments: 0,
+    //   reposts: 0,
+    //   liked: false,
+    //   reposted: false,
+    // };
+    //
+    // setPosts([post, ...posts]);
+    // setNewPost("");
+    // toast({
+    //   title: "Post created!",
+    //   description: "Your post has been shared with your followers.",
+    // });
   };
 
   const handleLike = (postId: string) => {
-    setPosts(
-      posts.map((post) =>
-        post.id === postId
-          ? {
-              ...post,
-              liked: !post.liked,
-              likes: post.liked ? post.likes - 1 : post.likes + 1,
-            }
-          : post
-      )
-    );
+    // setPosts(
+    //   posts.map((post) =>
+    //     post.id === postId
+    //       ? {
+    //           ...post,
+    //           liked: !post.liked,
+    //           likes: post.liked ? post.likes - 1 : post.likes + 1,
+    //         }
+    //       : post
+    //   )
+    // );
   };
 
   const handleRepost = (postId: string) => {
-    setPosts(
-      posts.map((post) =>
-        post.id === postId
-          ? {
-              ...post,
-              reposted: !post.reposted,
-              reposts: post.reposted ? post.reposts - 1 : post.reposts + 1,
-            }
-          : post
-      )
-    );
-
-    toast({
-      title: "Reposted!",
-      description: "Post shared with your followers.",
-    });
+    // setPosts(
+    //   posts.map((post) =>
+    //     post.id === postId
+    //       ? {
+    //           ...post,
+    //           reposted: !post.reposted,
+    //           reposts: post.reposted ? post.reposts - 1 : post.reposts + 1,
+    //         }
+    //       : post
+    //   )
+    // );
+    //
+    // toast({
+    //   title: "Reposted!",
+    //   description: "Post shared with your followers.",
+    // });
   };
+
+
   return (
     <div className="min-h-screen bg-gradient-hero">
       {/* Top Navigation */}
@@ -219,126 +171,12 @@ export default function FeedPage() {
           {/* Main Feed */}
           <main className="lg:col-span-2 space-y-6">
             {/* Create Post */}
-            <Card className="shadow-soft bg-gradient-card border-0">
-              <CardHeader>
-                <div className="flex items-start space-x-4">
-                  <Avatar>
-                    <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=you" />
-                    <AvatarFallback>You</AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1">
-                    <Textarea
-                      placeholder="What's happening?"
-                      value={newPost}
-                      onChange={(e) => setNewPost(e.target.value)}
-                      className="border-0 resize-none focus:ring-0 text-lg"
-                      rows={3}
-                    />
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="flex justify-end pt-0">
-                <Button
-                  onClick={handleCreatePost}
-                  disabled={!newPost.trim()}
-                  className="rounded-full px-8"
-                >
-                  Post
-                </Button>
-              </CardContent>
-            </Card>
+            <CreateForm />
 
             {/* Posts Feed */}
-            <div className="space-y-4">
-              {posts.map((post) => (
-                <Card
-                  key={post.id}
-                  className="shadow-soft bg-gradient-card border-0 hover:shadow-medium transition-all duration-200"
-                >
-                  <CardContent className="p-6">
-                    <div className="flex items-start space-x-4">
-                      <Avatar>
-                        <AvatarImage src={post.author.avatar} />
-                        <AvatarFallback>{post.author.name[0]}</AvatarFallback>
-                      </Avatar>
-
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-2 mb-2">
-                          <h3 className="font-semibold">{post.author.name}</h3>
-                          <span className="text-muted-foreground text-sm">
-                            {post.author.username}
-                          </span>
-                          <span className="text-muted-foreground text-sm">
-                            ·
-                          </span>
-                          <span className="text-muted-foreground text-sm">
-                            {post.timestamp}
-                          </span>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="ml-auto h-8 w-8"
-                          >
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </div>
-
-                        <p className="text-foreground mb-4 leading-relaxed">
-                          {post.content}
-                        </p>
-
-                        <div className="flex items-center justify-between max-w-md">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-muted-foreground hover:text-social-comment"
-                          >
-                            <MessageCircle className="h-4 w-4 mr-2" />
-                            {post.comments}
-                          </Button>
-
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleRepost(post.id)}
-                            className={`text-muted-foreground hover:text-social-repost ${
-                              post.reposted ? "text-social-repost" : ""
-                            }`}
-                          >
-                            <Repeat2 className="h-4 w-4 mr-2" />
-                            {post.reposts}
-                          </Button>
-
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleLike(post.id)}
-                            className={`text-muted-foreground hover:text-social-like ${
-                              post.liked ? "text-social-like" : ""
-                            }`}
-                          >
-                            <Heart
-                              className={`h-4 w-4 mr-2 ${
-                                post.liked ? "fill-current" : ""
-                              }`}
-                            />
-                            {post.likes}
-                          </Button>
-
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-muted-foreground hover:text-foreground"
-                          >
-                            <Share className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+              <Suspense fallback={<>Posts fallback</>}>
+                <Posts />
+              </Suspense>
           </main>
         </div>
       </div>
