@@ -1,51 +1,16 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Heart,
   MessageCircle,
-  Repeat2,
-  Share,
-  MoreHorizontal,
   Search,
   Bell,
   User,
 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { Post } from '@/graphql/generated/graphql';
-import { query } from '@/lib/graphql/apolloClient';
-import { GET_POSTS } from '@/graphql/queries/post';
 import { Suspense } from 'react';
 import Posts from '@/features/posts/components';
 import { CreateForm } from '@/features/posts/components/create-form';
 
-
-// interface Post {
-//   id: string;
-//   author: {
-//     name: string;
-//     username: string;
-//     avatar: string;
-//   };
-//   content: string;
-//   timestamp: string;
-//   likes: number;
-//   comments: number;
-//   reposts: number;
-//   liked: boolean;
-//   reposted: boolean;
-// }
-
 export default async function FeedPage() {
-  // const [posts, setPosts] = useState<Post[]>([]);
-  // const [newPost, setNewPost] = useState("");
-  // const { toast } = useToast();
-
   const handleCreatePost = () => {
     // if (!newPost.trim()) return;
     //

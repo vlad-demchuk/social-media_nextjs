@@ -78,7 +78,7 @@ export const Item = ({ post }: Props) => {
 
                 <Like
                   postId={post.id}
-                  isLiked={false}
+                  isLiked={post.isLiked}
                   likesCount={post.likesCount}
                   onLike={likePost}
                   onUnlike={unlikePost}

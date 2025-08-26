@@ -44,6 +44,7 @@ export const GET_POSTS = gql(`
       username
       likesCount
       commentsCount
+      isLiked
     }
   }
 `);
