@@ -1,16 +1,14 @@
 'use client';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import { Mail, Lock, User, Chrome, Github } from "lucide-react";
-import { useRouter } from 'next/navigation'
-import { useState } from "react";
-import heroImage from "@/assets/auth-hero.jpg";
-
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@radix-ui/react-tabs';
+import { Chrome, Github, Lock, Mail, User } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 // TODO: make as server component, use server actions
 
@@ -22,22 +20,22 @@ export default function AuthPage() {
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     // Simulate auth process
     setTimeout(() => {
       setIsLoading(false);
       toast({
-        title: "Welcome!",
-        description: "Successfully signed in to your account.",
+        title: 'Welcome!',
+        description: 'Successfully signed in to your account.',
       });
-      router.push("/feed");
+      router.push('/feed');
     }, 1500);
   };
 
   const handleSocialAuth = (provider: string) => {
     toast({
       title: `${provider} Sign In`,
-      description: "Social authentication would be implemented here.",
+      description: 'Social authentication would be implemented here.',
     });
   };
 
@@ -45,12 +43,6 @@ export default function AuthPage() {
     <div className="min-h-screen flex">
       {/* Left Side - Hero Image */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${heroImage.src})`,
-          }}
-        />
         <div className="absolute inset-0 bg-gradient-hero" />
         <div className="relative z-10 flex flex-col justify-center items-start p-12 text-foreground">
           <h1 className="text-4xl font-bold mb-4">Connect with the world</h1>
@@ -61,7 +53,7 @@ export default function AuthPage() {
       </div>
 
       {/* Right Side - Auth Forms */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-gradient-hero">
+      <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <div className="text-center mb-8 lg:hidden">
             <h1 className="text-3xl font-bold mb-2">Welcome</h1>
@@ -76,14 +68,23 @@ export default function AuthPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Tabs defaultValue="signin" className="space-y-4">
+              <Tabs
+                defaultValue="signin"
+                className="space-y-4"
+              >
                 <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="signin">Sign In</TabsTrigger>
                   <TabsTrigger value="signup">Sign Up</TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="signin" className="space-y-4">
-                  <form onSubmit={handleAuth} className="space-y-4">
+                <TabsContent
+                  value="signin"
+                  className="space-y-4"
+                >
+                  <form
+                    onSubmit={handleAuth}
+                    className="space-y-4"
+                  >
                     <div className="space-y-2">
                       <Label htmlFor="email">Email</Label>
                       <div className="relative">
@@ -110,19 +111,25 @@ export default function AuthPage() {
                         />
                       </div>
                     </div>
-                    <Button 
-                      type="submit" 
-                      className="w-full" 
+                    <Button
+                      type="submit"
+                      className="w-full"
                       disabled={isLoading}
                       variant="default"
                     >
-                      {isLoading ? "Signing in..." : "Sign In"}
+                      {isLoading ? 'Signing in...' : 'Sign In'}
                     </Button>
                   </form>
                 </TabsContent>
 
-                <TabsContent value="signup" className="space-y-4">
-                  <form onSubmit={handleAuth} className="space-y-4">
+                <TabsContent
+                  value="signup"
+                  className="space-y-4"
+                >
+                  <form
+                    onSubmit={handleAuth}
+                    className="space-y-4"
+                  >
                     <div className="space-y-2">
                       <Label htmlFor="name">Full Name</Label>
                       <div className="relative">
@@ -162,13 +169,13 @@ export default function AuthPage() {
                         />
                       </div>
                     </div>
-                    <Button 
-                      type="submit" 
-                      className="w-full" 
+                    <Button
+                      type="submit"
+                      className="w-full"
                       disabled={isLoading}
                       variant="default"
                     >
-                      {isLoading ? "Creating account..." : "Create Account"}
+                      {isLoading ? 'Creating account...' : 'Create Account'}
                     </Button>
                   </form>
                 </TabsContent>
@@ -188,7 +195,7 @@ export default function AuthPage() {
               <div className="grid grid-cols-2 gap-3">
                 <Button
                   variant="outline"
-                  onClick={() => handleSocialAuth("Google")}
+                  onClick={() => handleSocialAuth('Google')}
                   className="w-full"
                 >
                   <Chrome className="mr-2 h-4 w-4" />
@@ -196,7 +203,7 @@ export default function AuthPage() {
                 </Button>
                 <Button
                   variant="outline"
-                  onClick={() => handleSocialAuth("GitHub")}
+                  onClick={() => handleSocialAuth('GitHub')}
                   className="w-full"
                 >
                   <Github className="mr-2 h-4 w-4" />
@@ -205,12 +212,18 @@ export default function AuthPage() {
               </div>
 
               <p className="text-center text-sm text-muted-foreground mt-6">
-                By continuing, you agree to our{" "}
-                <a href="#" className="text-primary hover:underline">
+                By continuing, you agree to our{' '}
+                <a
+                  href="#"
+                  className="text-primary hover:underline"
+                >
                   Terms of Service
-                </a>{" "}
-                and{" "}
-                <a href="#" className="text-primary hover:underline">
+                </a>{' '}
+                and{' '}
+                <a
+                  href="#"
+                  className="text-primary hover:underline"
+                >
                   Privacy Policy
                 </a>
                 .
