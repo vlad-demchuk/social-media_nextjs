@@ -1,12 +1,13 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useActionState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Loader } from 'lucide-react';
 
 interface Props {
   children: ReactNode,
@@ -14,10 +15,12 @@ interface Props {
 }
 
 export const ThreeDotMenu = ({ children, onDelete }: Props) => {
+  const [, formAction, isPending] = useActionState(onDelete, null);
+
   const items = [
     {
       title: 'Delete Post',
-      action: onDelete,
+      action: formAction,
     },
   ];
 
@@ -39,7 +42,7 @@ export const ThreeDotMenu = ({ children, onDelete }: Props) => {
                 type="submit"
                 className="w-full text-left"
               >
-                {item.title}
+                {isPending ? <Loader /> : item.title}
               </button>
             </DropdownMenuItem>
           </form>

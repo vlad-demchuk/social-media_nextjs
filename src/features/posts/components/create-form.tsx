@@ -6,14 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useActionState } from 'react';
 import { createPost, PostFormState } from '@/lib/actions';
+import { Loader } from 'lucide-react';
 
 export const CreateForm = () => {
   const initialState: PostFormState = { message: null, errors: {} };
 
-  const [state, formAction] = useActionState(createPost, initialState)
+  const [state, formAction, isPending] = useActionState(createPost, initialState)
 
   return (
-    <Card className="shadow-soft bg-gradient-card border-0">
+    <Card>
       <form action={formAction}>
         <CardHeader>
           <div className="flex items-start space-x-4">
@@ -25,7 +26,7 @@ export const CreateForm = () => {
               <Textarea
                 placeholder="What's happening?"
                 required
-                className="border-0 resize-none focus:ring-0 text-lg"
+                className="resize-none text-lg"
                 rows={3}
                 name="content"
               />
@@ -37,8 +38,9 @@ export const CreateForm = () => {
           <Button
             type="submit"
             className="rounded-full px-8"
+            disabled={isPending}
           >
-            Post
+            {isPending ? <Loader /> : 'Post'}
           </Button>
         </CardContent>
       </form>

@@ -17,7 +17,7 @@ export const Item = ({ post }: Props) => {
 
   return (
     <article key={post.id}>
-      <Card className="shadow-soft bg-gradient-card border-0 hover:shadow-medium transition-all duration-200">
+      <Card className="hover:shadow-lg transition-all duration-200">
         <CardContent className="p-6">
           <div className="flex items-start space-x-4">
             {/*<Avatar>*/}
