@@ -22,7 +22,7 @@ export const Like = ({ postId, isLiked: initialIsLiked, likesCount: initialLikes
 
   const toggleLikeAction = toggleLike.bind(null, postId, isLiked ? 'unlike' : 'like');
 
-  const [state, formAction, isPending] = useActionState(toggleLikeAction, initialState);
+  const [state, formAction] = useActionState(toggleLikeAction, initialState);
 
   useEffect(() => {
     if (state?.errorMessage) {

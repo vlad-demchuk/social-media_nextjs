@@ -9,7 +9,10 @@ export const List = ({ posts }: Props) => {
   return (
     <section className="space-y-4">
       {posts.map((post) => (
-        <Item key={post.id} post={post} />
+        <Item
+          key={post.id}
+          post={post}
+        />
       ))}
     </section>
   );

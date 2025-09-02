@@ -1,76 +1,75 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   MessageCircle,
   Search,
   Bell,
   User,
-} from "lucide-react";
+} from 'lucide-react';
 import { Suspense } from 'react';
 import Posts from '@/features/posts/components';
 import { CreateForm } from '@/features/posts/components/create-form';
 
 export default async function FeedPage() {
   // const handleCreatePost = () => {
-    // if (!newPost.trim()) return;
-    //
-    // const post: Post = {
-    //   id: Date.now().toString(),
-    //   author: {
-    //     name: "You",
-    //     username: "@you",
-    //     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=you",
-    //   },
-    //   content: newPost,
-    //   timestamp: "now",
-    //   likes: 0,
-    //   comments: 0,
-    //   reposts: 0,
-    //   liked: false,
-    //   reposted: false,
-    // };
-    //
-    // setPosts([post, ...posts]);
-    // setNewPost("");
-    // toast({
-    //   title: "Post created!",
-    //   description: "Your post has been shared with your followers.",
-    // });
+  // if (!newPost.trim()) return;
+  //
+  // const post: Post = {
+  //   id: Date.now().toString(),
+  //   author: {
+  //     name: "You",
+  //     username: "@you",
+  //     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=you",
+  //   },
+  //   content: newPost,
+  //   timestamp: "now",
+  //   likes: 0,
+  //   comments: 0,
+  //   reposts: 0,
+  //   liked: false,
+  //   reposted: false,
+  // };
+  //
+  // setPosts([post, ...posts]);
+  // setNewPost("");
+  // toast({
+  //   title: "Post created!",
+  //   description: "Your post has been shared with your followers.",
+  // });
   // };
 
   // const handleLike = (postId: string) => {
-    // setPosts(
-    //   posts.map((post) =>
-    //     post.id === postId
-    //       ? {
-    //           ...post,
-    //           liked: !post.liked,
-    //           likes: post.liked ? post.likes - 1 : post.likes + 1,
-    //         }
-    //       : post
-    //   )
-    // );
+  // setPosts(
+  //   posts.map((post) =>
+  //     post.id === postId
+  //       ? {
+  //           ...post,
+  //           liked: !post.liked,
+  //           likes: post.liked ? post.likes - 1 : post.likes + 1,
+  //         }
+  //       : post
+  //   )
+  // );
   // };
 
   // const handleRepost = (postId: string) => {
-    // setPosts(
-    //   posts.map((post) =>
-    //     post.id === postId
-    //       ? {
-    //           ...post,
-    //           reposted: !post.reposted,
-    //           reposts: post.reposted ? post.reposts - 1 : post.reposts + 1,
-    //         }
-    //       : post
-    //   )
-    // );
-    //
-    // toast({
-    //   title: "Reposted!",
-    //   description: "Post shared with your followers.",
-    // });
+  // setPosts(
+  //   posts.map((post) =>
+  //     post.id === postId
+  //       ? {
+  //           ...post,
+  //           reposted: !post.reposted,
+  //           reposts: post.reposted ? post.reposts - 1 : post.reposts + 1,
+  //         }
+  //       : post
+  //   )
+  // );
+  //
+  // toast({
+  //   title: "Reposted!",
+  //   description: "Post shared with your followers.",
+  // });
   // };
-
 
   return (
     <div className="min-h-screen bg-gradient-hero">
@@ -94,10 +93,16 @@ export default async function FeedPage() {
             </div>
 
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="icon">
+              <Button
+                variant="ghost"
+                size="icon"
+              >
                 <Bell className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="icon">
+              <Button
+                variant="ghost"
+                size="icon"
+              >
                 <User className="h-5 w-5" />
               </Button>
             </div>
@@ -112,19 +117,31 @@ export default async function FeedPage() {
             <Card className="shadow-soft bg-gradient-card border-0">
               <CardContent className="p-6">
                 <nav className="space-y-2">
-                  <Button variant="ghost" className="w-full justify-start">
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start"
+                  >
                     <User className="mr-3 h-5 w-5" />
                     Profile
                   </Button>
-                  <Button variant="secondary" className="w-full justify-start">
+                  <Button
+                    variant="secondary"
+                    className="w-full justify-start"
+                  >
                     <Search className="mr-3 h-5 w-5" />
                     Explore
                   </Button>
-                  <Button variant="ghost" className="w-full justify-start">
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start"
+                  >
                     <Bell className="mr-3 h-5 w-5" />
                     Notifications
                   </Button>
-                  <Button variant="ghost" className="w-full justify-start">
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start"
+                  >
                     <MessageCircle className="mr-3 h-5 w-5" />
                     Messages
                   </Button>
@@ -139,9 +156,9 @@ export default async function FeedPage() {
             <CreateForm />
 
             {/* Posts Feed */}
-              <Suspense fallback={<>Posts fallback</>}>
-                <Posts />
-              </Suspense>
+            <Suspense fallback={<>Posts fallback</>}>
+              <Posts />
+            </Suspense>
           </main>
         </div>
       </div>

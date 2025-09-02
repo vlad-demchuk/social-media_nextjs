@@ -9,7 +9,7 @@ export const GET_POST_COMMENTS = gql(`
       username
     }
   }
-`)
+`);
 
 export const CREATE_COMMENT = gql(`
   mutation CreateComment($input: CreateCommentInput!) {
@@ -25,7 +25,7 @@ export const CREATE_COMMENT = gql(`
       }
     }
   }
-`)
+`);
 
 export const DELETE_COMMENT = gql(`
   mutation DeleteComment($commentId: Int!) {
@@ -36,4 +36,4 @@ export const DELETE_COMMENT = gql(`
       commentId
     }
   }
-`)
+`);

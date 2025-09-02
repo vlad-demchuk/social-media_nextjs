@@ -11,7 +11,6 @@ export default function FeedError({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Optionally log the error to an error reporting service
     console.error(error);
   }, [error]);
 
@@ -20,7 +19,6 @@ export default function FeedError({
       <h2 className="text-center">Something went wrong!</h2>
       <Button
         onClick={
-          // Attempt to recover by trying to re-render the invoices route
           () => reset()
         }
       >

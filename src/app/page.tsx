@@ -1,8 +1,8 @@
-import { ArrowRight, Users, MessageSquare, Heart } from "lucide-react";
-import heroImage from "@/assets/auth-hero.jpg";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import Image from "next/image";
+import { ArrowRight, Users, MessageSquare, Heart } from 'lucide-react';
+import heroImage from '@/assets/auth-hero.jpg';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default async function RootPage() {
 
@@ -32,7 +32,10 @@ export default async function RootPage() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="/auth">
-                <Button size="lg" className="text-lg px-8 py-6 rounded-xl">
+                <Button
+                  size="lg"
+                  className="text-lg px-8 py-6 rounded-xl"
+                >
                   Get Started
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>

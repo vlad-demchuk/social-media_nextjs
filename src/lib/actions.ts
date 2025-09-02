@@ -52,6 +52,7 @@ export const createPost = async (
     revalidatePath('/feed');
   } catch (e) {
     // If a database error occurs, return a more specific error.
+    console.error(e);
     return {
       message: 'Database Error: Failed to Create Post.',
     };

@@ -11,7 +11,7 @@ import { Loader } from 'lucide-react';
 export const CreateForm = () => {
   const initialState: PostFormState = { message: null, errors: {} };
 
-  const [state, formAction, isPending] = useActionState(createPost, initialState)
+  const [state, formAction, isPending] = useActionState(createPost, initialState);
 
   return (
     <Card>
