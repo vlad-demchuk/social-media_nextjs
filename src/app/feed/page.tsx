@@ -11,7 +11,7 @@ import Posts from '@/features/posts/components';
 import { CreateForm } from '@/features/posts/components/create-form';
 
 export default async function FeedPage() {
-  const handleCreatePost = () => {
+  // const handleCreatePost = () => {
     // if (!newPost.trim()) return;
     //
     // const post: Post = {
@@ -36,9 +36,9 @@ export default async function FeedPage() {
     //   title: "Post created!",
     //   description: "Your post has been shared with your followers.",
     // });
-  };
+  // };
 
-  const handleLike = (postId: string) => {
+  // const handleLike = (postId: string) => {
     // setPosts(
     //   posts.map((post) =>
     //     post.id === postId
@@ -50,9 +50,9 @@ export default async function FeedPage() {
     //       : post
     //   )
     // );
-  };
+  // };
 
-  const handleRepost = (postId: string) => {
+  // const handleRepost = (postId: string) => {
     // setPosts(
     //   posts.map((post) =>
     //     post.id === postId
@@ -69,7 +69,7 @@ export default async function FeedPage() {
     //   title: "Reposted!",
     //   description: "Post shared with your followers.",
     // });
-  };
+  // };
 
 
   return (

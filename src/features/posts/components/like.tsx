@@ -4,7 +4,7 @@ import { Heart } from 'lucide-react';
 import { useActionState, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { LikeFormState, toggleLike } from '@/lib/actions';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 interface Props {
   postId: number,
@@ -14,11 +14,7 @@ interface Props {
   onUnlike: () => Promise<void>;
 }
 
-// TODO: Check if user already liked post before
-
 export const Like = ({ postId, isLiked: initialIsLiked, likesCount: initialLikesCount }: Props) => {
-  const { toast } = useToast();
-
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [likesCount, setLikesCount] = useState(initialLikesCount);
 
@@ -26,17 +22,13 @@ export const Like = ({ postId, isLiked: initialIsLiked, likesCount: initialLikes
 
   const toggleLikeAction = toggleLike.bind(null, postId, isLiked ? 'unlike' : 'like');
 
-  const [state, formAction] = useActionState(toggleLikeAction, initialState);
+  const [state, formAction, isPending] = useActionState(toggleLikeAction, initialState);
 
   useEffect(() => {
     if (state?.errorMessage) {
-      toast({
-        title: state.errorMessage,
-        variant: 'destructive',
-        duration: 3000,
-      });
+      toast.error(state.errorMessage, { duration: 3000 });
     }
-  }, [state, toast]);
+  }, [state]);
 
   return (
     <form

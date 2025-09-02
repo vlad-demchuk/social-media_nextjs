@@ -4,18 +4,17 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@radix-ui/react-tabs';
 import { Chrome, Github, Lock, Mail, User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 // TODO: make as server component, use server actions
 
 export default function AuthPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { toast } = useToast();
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,8 +23,7 @@ export default function AuthPage() {
     // Simulate auth process
     setTimeout(() => {
       setIsLoading(false);
-      toast({
-        title: 'Welcome!',
+      toast.message('Welcome!', {
         description: 'Successfully signed in to your account.',
       });
       router.push('/feed');
@@ -33,8 +31,7 @@ export default function AuthPage() {
   };
 
   const handleSocialAuth = (provider: string) => {
-    toast({
-      title: `${provider} Sign In`,
+    toast.error(`${provider} Sign In`, {
       description: 'Social authentication would be implemented here.',
     });
   };
