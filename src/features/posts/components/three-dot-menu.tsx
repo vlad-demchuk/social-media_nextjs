@@ -40,9 +40,19 @@ export const ThreeDotMenu = ({ children, onDelete }: Props) => {
             >
               <button
                 type="submit"
-                className="w-full text-left"
+                className="w-full text-left disabled:opacity-60 disabled:cursor-not-allowed"
+                disabled={isPending}
+                aria-disabled={isPending}
+                aria-busy={isPending}
               >
-                {isPending ? <Loader /> : item.title}
+                {isPending ? (
+                  <span className="inline-flex items-center gap-2">
+                    <Loader className="h-4 w-4 animate-spin" />
+                    <span>Deleting…</span>
+                  </span>
+                ) : (
+                  item.title
+                )}
               </button>
             </DropdownMenuItem>
           </form>

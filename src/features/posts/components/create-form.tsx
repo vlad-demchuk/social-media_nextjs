@@ -29,6 +29,7 @@ export const CreateForm = () => {
                 className="resize-none text-lg"
                 rows={3}
                 name="content"
+                disabled={isPending}
               />
               {state?.errors?.content && 'This field is required'}
             </div>
@@ -39,8 +40,17 @@ export const CreateForm = () => {
             type="submit"
             className="rounded-full px-8"
             disabled={isPending}
+            aria-disabled={isPending}
+            aria-busy={isPending}
           >
-            {isPending ? <Loader /> : 'Post'}
+            {isPending ? (
+              <span className="inline-flex items-center gap-2">
+                <Loader className="h-4 w-4 animate-spin" />
+                <span>Posting…</span>
+              </span>
+            ) : (
+              'Post'
+            )}
           </Button>
         </CardContent>
       </form>
