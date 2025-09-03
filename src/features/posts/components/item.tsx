@@ -5,20 +5,23 @@ import { Button } from '@/components/ui/button';
 import { MessageCircle, MoreHorizontal, Share } from 'lucide-react';
 import { Post } from '@/graphql/generated/graphql';
 import { Like } from '@/features/posts/components/like';
+import { ReactNode } from 'react';
+import Link from 'next/link';
 
 interface Props {
   post: Post;
+  children?: ReactNode;
 }
 
-export const Item = ({ post }: Props) => {
+export const Item = ({ post, children }: Props) => {
   const deletePost = deletePostById.bind(null, post.id);
   const likePost = likePostById.bind(null, post.id);
   const unlikePost = unlikePostById.bind(null, post.id);
 
   return (
     <article key={post.id}>
-      <Card className="hover:shadow-lg transition-all duration-200">
-        <CardContent className="p-6">
+      <Card className="hover:shadow-lg transition-all duration-200 p-6">
+        <CardContent className="p-0">
           <div className="flex items-start space-x-4">
             {/*<Avatar>*/}
             {/*  <AvatarImage src={post.author.avatar} />*/}
@@ -55,14 +58,16 @@ export const Item = ({ post }: Props) => {
               </p>
 
               <div className="flex items-center justify-between max-w-md">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-muted-foreground hover:text-social-comment"
-                >
-                  <MessageCircle className="h-4 w-4 mr-2" />
-                  {post.commentsCount}
-                </Button>
+                <Link href={`/feed/${post.id}`}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-muted-foreground hover:text-social-comment"
+                  >
+                    <MessageCircle className="h-4 w-4 mr-2" />
+                    {post.commentsCount}
+                  </Button>
+                </Link>
 
                 {/*<Button*/}
                 {/*  variant="ghost"*/}
@@ -96,6 +101,8 @@ export const Item = ({ post }: Props) => {
             </div>
           </div>
         </CardContent>
+
+        {children}
       </Card>
     </article>
   );

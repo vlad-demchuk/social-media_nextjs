@@ -49,6 +49,20 @@ export const GET_POSTS = gql(`
   }
 `);
 
+export const GET_POST = gql(`
+  query GetPostById($postId: Int!) {
+    post(postId: $postId) {
+      id
+      content
+      createdAt
+      username
+      likesCount
+      commentsCount
+      isLiked
+    }
+  }
+`)
+
 export const CREATE_POST = gql(`
   mutation CreatePost($input: CreatePostInput!) {
     createPost(input: $input) {
