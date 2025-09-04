@@ -15,7 +15,7 @@ export const CreateForm = () => {
 
   return (
     <Card>
-      <form action={formAction}>
+      <form className="space-y-3" action={formAction}>
         <CardHeader>
           <div className="flex items-start space-x-4">
             <Avatar>
@@ -25,13 +25,12 @@ export const CreateForm = () => {
             <div className="flex-1">
               <Textarea
                 placeholder="What's happening?"
-                required
                 className="resize-none text-lg"
                 rows={3}
                 name="content"
                 disabled={isPending}
               />
-              {state?.errors?.content && 'This field is required'}
+              {state?.errors?.content && <p className="mt-2 text-sm text-red-500">This field is required</p>}
             </div>
           </div>
         </CardHeader>

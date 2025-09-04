@@ -2,8 +2,10 @@
 
 import { revalidatePath } from 'next/cache';
 import request from 'graphql-request';
-import { CREATE_POST, DELETE_POST, LIKE_POST, UNLIKE_POST } from '@/graphql/queries/post';
 import { z } from 'zod';
+import { CREATE_POST, DELETE_POST, LIKE_POST, UNLIKE_POST } from '@/graphql/queries/post';
+import { CREATE_COMMENT, DELETE_COMMENT } from '@/graphql/queries/comment';
+import { redirect } from 'next/navigation';
 
 export interface PostFormState {
   errors?: {
@@ -19,19 +21,33 @@ export interface LikeFormState {
   errorMessage: string | null;
 }
 
-const PostFormSchema = z.object({
+export interface CommentFormState {
+  errors?: {
+    content?: string[];
+  };
+  message?: string | null;
+}
+
+const CreatePostFormSchema = z.object({
   content: z
   .string({ invalid_type_error: 'Please fill in the post content.' })
   .trim()
   .min(1, { message: 'Please fill in the post content.' }),
 });
 
+const CreateCommentFormSchema = z.object({
+  content: z
+  .string({ invalid_type_error: 'Please fill in the comment content.' })
+  .trim()
+  .min(1, { message: 'Please fill in the comment content.' }),
+});
+
 export const createPost = async (
-  prevState: PostFormState | undefined,
+  _prevState: PostFormState | undefined,
   formData: FormData,
 ) => {
   // Validate form using Zod
-  const validatedFields = PostFormSchema.safeParse({
+  const validatedFields = CreatePostFormSchema.safeParse({
     content: formData.get('content'),
   });
 
@@ -48,8 +64,6 @@ export const createPost = async (
 
   try {
     await request({ url: 'http://localhost:4000/graphql', document: CREATE_POST, variables: { input: { content } } });
-    // Revalidate the cache for the invoices page and redirect the user.
-    revalidatePath('/feed');
   } catch (e) {
     // If a database error occurs, return a more specific error.
     console.error(e);
@@ -57,11 +71,16 @@ export const createPost = async (
       message: 'Database Error: Failed to Create Post.',
     };
   }
+
+  // Revalidate the cache for the feed page.
+  revalidatePath('/feed');
 };
 
 export const deletePostById = async (id: number) => {
+  console.log('>>>>> id:', id);
   await request({ url: 'http://localhost:4000/graphql', document: DELETE_POST, variables: { postId: id } });
   revalidatePath('/feed');
+  redirect('/feed');
 };
 
 export const likePostById = async (postId: number) => {
@@ -91,4 +110,59 @@ export const toggleLike = async (postId: number, action: LikeFormAction) => {
       errorMessage: `Failed to ${action}`,
     };
   }
+};
+
+export const createComment = async (
+  postId: number,
+  _prevState: CommentFormState | undefined,
+  formData: FormData,
+) => {
+  // Validate form using Zod
+  const validatedFields = CreateCommentFormSchema.safeParse({
+    content: formData.get('content'),
+  });
+
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Comment.',
+    };
+  }
+
+  // Insert data into the database
+  const { content } = validatedFields.data;
+
+  try {
+    await request({
+      url: 'http://localhost:4000/graphql',
+      document: CREATE_COMMENT,
+      variables: { input: { content, postId } },
+    });
+  } catch (e) {
+    // If a database error occurs, return a more specific error.
+    console.error(e);
+    return {
+      message: 'Database Error: Failed to Create Comment.',
+    };
+  }
+
+  // Revalidate the cache for the post page.
+  revalidatePath(`/feed/${postId}`);
+};
+
+export const deleteCommentById = async (_prevState: null | void, formData: FormData) => {
+  const commentIdStr = formData.get('commentId')?.toString();
+  const postIdStr = formData.get('postId')?.toString();
+  const commentId = Number(commentIdStr);
+  const postIdNum = Number(postIdStr);
+  if (!commentId || !postIdNum) return;
+
+  await request({
+    url: 'http://localhost:4000/graphql',
+    document: DELETE_COMMENT,
+    variables: { commentId },
+  });
+
+  revalidatePath(`/feed/${postIdNum}`);
 };
