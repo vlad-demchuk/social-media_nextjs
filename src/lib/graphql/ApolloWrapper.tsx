@@ -11,6 +11,7 @@ function makeClient() {
     uri: 'http://localhost:4000/graphql',
     // you can disable result caching here if you want to
     // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
+    credentials: 'include',
     fetchOptions: {
       // you can pass additional options that should be passed to `fetch` here,
       // e.g. Next.js-related `fetch` options regarding caching and revalidation

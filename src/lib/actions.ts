@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { CREATE_POST, DELETE_POST, LIKE_POST, UNLIKE_POST } from '@/graphql/queries/post';
 import { CREATE_COMMENT, DELETE_COMMENT } from '@/graphql/queries/comment';
 import { redirect } from 'next/navigation';
+import { getClient } from '@/lib/graphql/apolloClient';
 
 export interface PostFormState {
   errors?: {
@@ -63,7 +64,7 @@ export const createPost = async (
   const { content } = validatedFields.data;
 
   try {
-    await request({ url: 'http://localhost:4000/graphql', document: CREATE_POST, variables: { input: { content } } });
+    await getClient().mutate({ mutation: CREATE_POST, variables: { input: { content } } });
   } catch (e) {
     // If a database error occurs, return a more specific error.
     console.error(e);
@@ -77,20 +78,17 @@ export const createPost = async (
 };
 
 export const deletePostById = async (id: number) => {
-  console.log('>>>>> id:', id);
-  await request({ url: 'http://localhost:4000/graphql', document: DELETE_POST, variables: { postId: id } });
+  await getClient().mutate({ mutation: DELETE_POST, variables: { postId: id } });
   revalidatePath('/feed');
   redirect('/feed');
 };
 
 export const likePostById = async (postId: number) => {
-  console.log('like action');
-  await request({ url: 'http://localhost:4000/graphql', document: LIKE_POST, variables: { postId } });
+  await getClient().mutate({ mutation: LIKE_POST, variables: { postId } });
 };
 
 export const unlikePostById = async (postId: number) => {
-  console.log('unlike action');
-  await request({ url: 'http://localhost:4000/graphql', document: UNLIKE_POST, variables: { postId } });
+  await getClient().mutate({ mutation: UNLIKE_POST, variables: { postId } });
 };
 
 export const toggleLike = async (postId: number, action: LikeFormAction) => {
@@ -134,9 +132,8 @@ export const createComment = async (
   const { content } = validatedFields.data;
 
   try {
-    await request({
-      url: 'http://localhost:4000/graphql',
-      document: CREATE_COMMENT,
+    await getClient().mutate({
+      mutation: CREATE_COMMENT,
       variables: { input: { content, postId } },
     });
   } catch (e) {

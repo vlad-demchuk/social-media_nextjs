@@ -4,30 +4,70 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@radix-ui/react-tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Chrome, Github, Lock, Mail, User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
+import { authClient } from '@/lib/auth/auth-client';
+import { GET_POSTS } from '@/graphql/queries/post';
+import { useQuery } from '@apollo/client/react'; //import the auth client
+
 // TODO: make as server component, use server actions
 
 export default function AuthPage() {
+    const { loading, error, data } = useQuery(GET_POSTS);
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [activeTab, setActiveTab] = useState<'signin' | 'signup'>('signin');
+
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    try {
+      console.log('>>>> credentials:', email, name, password, 'tab:', activeTab);
 
-    // Simulate auth process
-    setTimeout(() => {
+      if (activeTab === 'signin') {
+        const res = await authClient.signIn.email({
+          email,
+          password,
+          callbackURL: '/feed',
+          fetchOptions: {
+            onError: (ctx) => {
+              toast.error(ctx.error.message);
+            },
+            onSuccess: async () => {
+              toast.success('Signed in successfully');
+            },
+          },
+        });
+        console.log('>>>>> signIn res:', res);
+      } else {
+        const res = await authClient.signUp.email({
+          email,
+          name,
+          password,
+          callbackURL: '/feed',
+          fetchOptions: {
+            onError: (ctx) => {
+              toast.error(ctx.error.message);
+            },
+            onSuccess: async () => {
+              toast.success('Account created');
+            },
+          },
+        });
+        console.log('>>>>> signUp res:', res);
+      }
+    } finally {
       setIsLoading(false);
-      toast.message('Welcome!', {
-        description: 'Successfully signed in to your account.',
-      });
-      router.push('/feed');
-    }, 1500);
+    }
   };
 
   const handleSocialAuth = (provider: string) => {
@@ -66,7 +106,8 @@ export default function AuthPage() {
             </CardHeader>
             <CardContent>
               <Tabs
-                defaultValue="signin"
+                value={activeTab}
+                onValueChange={(v) => setActiveTab(v as 'signin' | 'signup')}
                 className="space-y-4"
               >
                 <TabsList className="grid w-full grid-cols-2">
@@ -92,6 +133,8 @@ export default function AuthPage() {
                           placeholder="Enter your email"
                           className="pl-10"
                           required
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
                     </div>
@@ -105,6 +148,8 @@ export default function AuthPage() {
                           placeholder="Enter your password"
                           className="pl-10"
                           required
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
                         />
                       </div>
                     </div>
@@ -137,6 +182,8 @@ export default function AuthPage() {
                           placeholder="Enter your full name"
                           className="pl-10"
                           required
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
                         />
                       </div>
                     </div>
@@ -150,6 +197,8 @@ export default function AuthPage() {
                           placeholder="Enter your email"
                           className="pl-10"
                           required
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
                     </div>
@@ -163,6 +212,8 @@ export default function AuthPage() {
                           placeholder="Create a password"
                           className="pl-10"
                           required
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
                         />
                       </div>
                     </div>

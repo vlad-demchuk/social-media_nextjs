@@ -1,21 +1,30 @@
 import { HttpLink } from '@apollo/client';
+import { SetContextLink } from '@apollo/client/link/context';
 import {
   registerApolloClient,
   ApolloClient,
   InMemoryCache,
 } from '@apollo/client-integration-nextjs';
+import { cookies } from 'next/headers';
 
-export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
+const httpLink = new HttpLink({
+  uri: 'http://localhost:4000/graphql',
+});
+
+const authLink = new SetContextLink(async (prevContext) => {
+  const cookieStore = await cookies();
+
+  return {
+    headers: {
+      ...prevContext.headers,
+      Cookie: cookieStore.toString(),
+    },
+  };
+});
+
+export const { getClient, query } = registerApolloClient(() => {
   return new ApolloClient({
     cache: new InMemoryCache(),
-    link: new HttpLink({
-      // this needs to be an absolute url, as relative urls cannot be used in SSR
-      uri: 'http://localhost:4000/graphql',
-      fetchOptions: {
-        // you can pass additional options that should be passed to `fetch` here,
-        // e.g. Next.js-related `fetch` options regarding caching and revalidation
-        // see https://nextjs.org/docs/app/api-reference/functions/fetch#fetchurl-options
-      },
-    }),
+    link: authLink.concat(httpLink),
   });
 });
