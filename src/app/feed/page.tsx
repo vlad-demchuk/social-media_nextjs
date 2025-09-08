@@ -10,9 +10,9 @@ export default async function FeedPage() {
       <CreateForm />
 
       {/* Posts Feed */}
-      {/*<Suspense fallback={<PostsSkeleton count={3} />}>*/}
+      <Suspense fallback={<PostsSkeleton count={3} />}>
         <Posts />
-      {/*</Suspense>*/}
+      </Suspense>
     </>
   );
 }
