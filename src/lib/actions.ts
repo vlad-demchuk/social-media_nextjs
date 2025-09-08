@@ -155,9 +155,8 @@ export const deleteCommentById = async (_prevState: null | void, formData: FormD
   const postIdNum = Number(postIdStr);
   if (!commentId || !postIdNum) return;
 
-  await request({
-    url: 'http://localhost:4000/graphql',
-    document: DELETE_COMMENT,
+  await getClient().mutate({
+    mutation: DELETE_COMMENT,
     variables: { commentId },
   });
 
