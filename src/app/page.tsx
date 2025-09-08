@@ -3,8 +3,16 @@ import heroImage from '@/assets/auth-hero.jpg';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
+import { query } from '@/lib/graphql/apolloClient';
+import { GET_POSTS } from '@/graphql/queries/post';
 
 export default async function RootPage() {
+  const { data: postsData, error } = await query({
+    query: GET_POSTS,
+  });
+
+  console.log('>>>>> postsData:', postsData);
+  console.log('>>>>> error:', error);
 
   return (
     <div className="min-h-screen bg-gradient-hero">
