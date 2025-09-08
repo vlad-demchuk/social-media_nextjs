@@ -7,20 +7,27 @@ import { Textarea } from '@/components/ui/textarea';
 import { useActionState } from 'react';
 import { createPost, PostFormState } from '@/lib/actions';
 import { Loader } from 'lucide-react';
+import { authClient } from '@/lib/auth/auth-client';
 
 export const CreateForm = () => {
   const initialState: PostFormState = { message: null, errors: {} };
+      const {
+        data: session,
+        isPending: isSessionPending
+    } = authClient.useSession()
+  console.log('>>>>> session:', session);
 
   const [state, formAction, isPending] = useActionState(createPost, initialState);
 
   return (
     <Card>
+      {isSessionPending? 'Loading...' :session?.user?.name}
       <form className="space-y-3" action={formAction}>
         <CardHeader>
           <div className="flex items-start space-x-4">
             <Avatar>
               <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=you" />
-              <AvatarFallback>You</AvatarFallback>
+              <AvatarFallback>You </AvatarFallback>
             </Avatar>
             <div className="flex-1">
               <Textarea

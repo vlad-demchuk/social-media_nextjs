@@ -8,7 +8,7 @@ import { ApolloClient, ApolloNextAppProvider, InMemoryCache } from '@apollo/clie
 function makeClient() {
   const httpLink = new HttpLink({
     // this needs to be an absolute url, as relative urls cannot be used in SSR
-    uri: 'http://localhost:4000/graphql',
+    uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
     // you can disable result caching here if you want to
     // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
     credentials: 'include',

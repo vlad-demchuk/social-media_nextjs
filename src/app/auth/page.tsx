@@ -42,8 +42,9 @@ export default function AuthPage() {
             onError: (ctx) => {
               toast.error(ctx.error.message);
             },
-            onSuccess: async () => {
+            onSuccess: async (ctx) => {
               toast.success('Signed in successfully');
+              console.log('>>>>> ctx:', ctx);
             },
           },
         });
@@ -53,13 +54,13 @@ export default function AuthPage() {
           email,
           name,
           password,
-          callbackURL: '/feed',
           fetchOptions: {
             onError: (ctx) => {
               toast.error(ctx.error.message);
             },
             onSuccess: async () => {
               toast.success('Account created');
+              router.push('/feed')
             },
           },
         });

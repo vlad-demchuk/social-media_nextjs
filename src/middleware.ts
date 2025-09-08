@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSessionCookie } from 'better-auth/cookies';
+import { cookies } from 'next/headers';
 
 export async function middleware(request: NextRequest) {
+  console.log('>>>>> cookies:',await cookies());
+  console.log('>>>>> request.cookies:', request.cookies);
   const sessionCookie = getSessionCookie(request);
   console.log('>>>>> middleware sessionCookie:', sessionCookie);
 
@@ -16,5 +19,5 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   runtime: 'nodejs',
-  matcher: ['/feed'],
+  matcher: [],
 };
