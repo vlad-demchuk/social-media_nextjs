@@ -1,3 +1,5 @@
+'use client';
+
 import { Card, CardContent } from '@/components/ui/card';
 
 export function PostsSkeleton({ count = 3 }: { count?: number }) {
