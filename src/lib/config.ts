@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
 const envSchema = z.object({
-  NEXT_PUBLIC_BETTER_AUTH_URL: z.string().url().optional(),
-  NEXT_PUBLIC_GRAPHQL_URL: z.string().url().optional(),
+  NEXT_PUBLIC_BETTER_AUTH_URL: z.string().url(),
+  NEXT_PUBLIC_GRAPHQL_URL: z.string().url(),
   DEV_BETTER_AUTH_URL: z.string().url(),
   DEV_GRAPHQL_URL: z.string().url(),
   NODE_ENV: z.enum(['development', 'production', 'test']),
