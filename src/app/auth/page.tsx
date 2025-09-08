@@ -11,10 +11,14 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 
 import { authClient } from '@/lib/auth/auth-client';
+import { useQuery } from '@apollo/client/react';
+import { GET_POSTS } from '@/graphql/queries/post';
 
 // TODO: make as server component, use server actions
 
 export default function AuthPage() {
+   const { data, error } =  useQuery(GET_POSTS);
+  console.log('>>>>> error:', error);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
