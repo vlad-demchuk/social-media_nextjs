@@ -3,12 +3,13 @@
 
 import { HttpLink } from '@apollo/client';
 import { ApolloClient, ApolloNextAppProvider, InMemoryCache } from '@apollo/client-integration-nextjs';
+import config from '@/lib/config';
 
 // have a function to create a client for you
 function makeClient() {
   const httpLink = new HttpLink({
     // this needs to be an absolute url, as relative urls cannot be used in SSR
-    uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
+    uri: config.graphql.url,
     // you can disable result caching here if you want to
     // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
     credentials: 'include',

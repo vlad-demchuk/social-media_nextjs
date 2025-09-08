@@ -11,14 +11,10 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 
 import { authClient } from '@/lib/auth/auth-client';
-import { GET_POSTS } from '@/graphql/queries/post';
-import { useQuery } from '@apollo/client/react'; //import the auth client
 
 // TODO: make as server component, use server actions
 
 export default function AuthPage() {
-    const { loading, error, data } = useQuery(GET_POSTS);
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,8 +27,6 @@ export default function AuthPage() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      console.log('>>>> credentials:', email, name, password, 'tab:', activeTab);
-
       if (activeTab === 'signin') {
         const res = await authClient.signIn.email({
           email,

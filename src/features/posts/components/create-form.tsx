@@ -15,7 +15,6 @@ export const CreateForm = () => {
         data: session,
         isPending: isSessionPending
     } = authClient.useSession()
-  console.log('>>>>> session:', session);
 
   const [state, formAction, isPending] = useActionState(createPost, initialState);
 

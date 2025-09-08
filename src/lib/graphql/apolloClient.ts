@@ -6,9 +6,10 @@ import {
   InMemoryCache,
 } from '@apollo/client-integration-nextjs';
 import { cookies } from 'next/headers';
+import config from '@/lib/config';
 
 const httpLink = new HttpLink({
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
+  uri: config.graphql.url,
   credentials: 'include',
 });
 
