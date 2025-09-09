@@ -38,7 +38,7 @@ export const Item = ({ post, children }: Props) => {
                       ·
                     </span>
                 <span className="text-muted-foreground text-sm">
-                      {post.createdAt}
+                      {new Date(post.createdAt).toLocaleString()}
                     </span>
 
                 <ThreeDotMenu onDelete={deletePost}>

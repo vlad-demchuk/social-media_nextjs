@@ -26,7 +26,7 @@ export const ThreeDotMenu = ({ children, onDelete }: Props) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild className="hover:cursor-pointer">{children}</DropdownMenuTrigger>
 
       <DropdownMenuContent>
         {items.map((item) => (

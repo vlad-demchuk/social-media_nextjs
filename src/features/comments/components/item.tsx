@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Comment } from '@/graphql/generated/graphql';
 import { useActionState } from 'react';
 import { Loader } from 'lucide-react';
+import { authClient } from '@/lib/auth/auth-client';
 
 interface Props {
   comment: Comment,
@@ -26,9 +27,7 @@ export const Item = ({ comment, postId }: Props) => {
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <span className="font-medium text-foreground">{comment.username || 'Anonymous'}</span>
           <span>·</span>
-          <span title={new Date(comment.createdAt).toLocaleString()}>
-                  {new Date(comment.createdAt).toLocaleDateString()} {new Date(comment.createdAt).toLocaleTimeString()}
-                </span>
+          {new Date(comment.createdAt).toLocaleString()}
         </div>
         <p className="text-sm break-words mt-1">{comment.content}</p>
       </div>

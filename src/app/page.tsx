@@ -39,16 +39,6 @@ export default async function RootPage() {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-
-              <Link href="/feed">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="text-lg px-8 py-6 rounded-xl"
-                >
-                  Explore Feed
-                </Button>
-              </Link>
             </div>
           </div>
         </div>
