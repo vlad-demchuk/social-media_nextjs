@@ -13,7 +13,10 @@ interface Props {
 }
 
 export const Item = ({ comment, postId }: Props) => {
+  const { data: session } = authClient.useSession();
   const [, formAction, isPending] = useActionState(deleteCommentById, null);
+
+  const canDelete = session?.user.name === comment.username;
 
   return (
     <article
@@ -43,18 +46,20 @@ export const Item = ({ comment, postId }: Props) => {
             name="postId"
             value={postId}
           />
-          <Button
-            type="submit"
-            variant="ghost"
-            size="sm"
-          >
-            {isPending ? (
-              <span className="inline-flex items-center gap-2">
+          {canDelete && (
+            <Button
+              type="submit"
+              variant="ghost"
+              size="sm"
+            >
+              {isPending ? (
+                <span className="inline-flex items-center gap-2">
               <Loader className="h-4 w-4 animate-spin" />
               <span>Deleting…</span>
             </span>
-            ) : 'Delete'}
-          </Button>
+              ) : 'Delete'}
+            </Button>
+          )}
         </form>
       </div>
     </article>

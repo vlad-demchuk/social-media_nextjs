@@ -8,25 +8,37 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Loader } from 'lucide-react';
+import { authClient } from '@/lib/auth/auth-client';
 
 interface Props {
+  postUserName: string,
+  onDelete: () => void | Promise<void>,
   children: ReactNode,
-  onDelete: () => void | Promise<void>
 }
 
-export const ThreeDotMenu = ({ children, onDelete }: Props) => {
+export const ThreeDotMenu = ({ postUserName, onDelete, children }: Props) => {
+  const { data: session } = authClient.useSession();
   const [, formAction, isPending] = useActionState(onDelete, null);
 
+  const canDelete = session?.user.name === postUserName;
+
   const items = [
-    {
-      title: 'Delete Post',
-      action: formAction,
-    },
+    ...(canDelete ? [{ title: 'Delete Post', action: formAction }] : []),
   ];
+
+  const hasActions = items.length > 0;
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild className="hover:cursor-pointer">{children}</DropdownMenuTrigger>
+      {hasActions && (
+        <DropdownMenuTrigger
+          asChild
+          className="hover:cursor-pointer"
+        >
+          {children}
+        </DropdownMenuTrigger>
+      )}
+
 
       <DropdownMenuContent>
         {items.map((item) => (

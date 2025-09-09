@@ -1,4 +1,3 @@
-import { betterAuth } from 'better-auth';
 import { headers } from 'next/headers';
 import { authClient } from '@/lib/auth/auth-client';
 
