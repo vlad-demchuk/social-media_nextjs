@@ -37,7 +37,10 @@ export const CreateForm = ({ postId }: Props) => {
           {state?.errors?.content && <p className="mt-2 text-sm text-red-500">This field is required</p>}
         </div>
         <div className="flex justify-end">
-          <Button type="submit" disabled={isPending}>
+          <Button
+            type="submit"
+            disabled={isPending}
+          >
             {isPending ? (
               <span className="inline-flex items-center gap-2">
                 <Loader className="h-4 w-4 animate-spin" />
