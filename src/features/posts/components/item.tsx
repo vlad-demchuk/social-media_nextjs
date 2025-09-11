@@ -41,7 +41,10 @@ export const Item = ({ post, children }: Props) => {
                       {new Date(post.createdAt).toLocaleString()}
                     </span>
 
-                <ThreeDotMenu postUserName={post.username} onDelete={deletePost}>
+                <ThreeDotMenu
+                  postUserName={post.username}
+                  onDelete={deletePost}
+                >
                   <Button
                     variant="ghost"
                     size="icon"
