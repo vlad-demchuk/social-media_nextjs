@@ -4,6 +4,7 @@ import { GET_POST } from '@/graphql/queries/post';
 import { List as CommentList } from '@/features/comments/components/list';
 import { CommentSkeleton } from '@/features/comments/components/skeleton';
 import { Suspense } from 'react';
+import { BackButton } from '@/components/ui/back-button';
 
 export default async function PostPage({
   params,
@@ -21,11 +22,16 @@ export default async function PostPage({
   if (error || !postData?.post) return <>Something went wrong</>;
 
   return (
-    <Post post={postData.post}>
+    <>
+      <div className="mb-4">
+        <BackButton />
+      </div>
 
-      <Suspense fallback={<CommentSkeleton />}>
-        <CommentList postId={postId} />
-      </Suspense>
-    </Post>
+      <Post post={postData.post}>
+        <Suspense fallback={<CommentSkeleton />}>
+          <CommentList postId={postId} />
+        </Suspense>
+      </Post>
+    </>
   );
 }

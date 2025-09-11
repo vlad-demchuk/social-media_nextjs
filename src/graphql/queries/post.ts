@@ -49,6 +49,20 @@ export const GET_POSTS = gql(`
   }
 `);
 
+export const GET_USER_POSTS = gql(`
+  query GetUserPosts($userName: String!) {
+    userPosts(userName: $userName) {
+      id
+      content
+      createdAt
+      username
+      likesCount
+      commentsCount
+      isLiked
+    }
+  }
+`)
+
 export const GET_POST = gql(`
   query GetPostById($postId: Int!) {
     post(postId: $postId) {
