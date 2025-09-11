@@ -1,7 +1,7 @@
 import { AppHeader } from '@/components/app-header';
 import { Navigation } from '@/components/navigation';
 
-export default function FeedLayout({
+export default function UsersLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

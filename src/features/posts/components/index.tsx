@@ -1,14 +1,14 @@
-
-import { query } from '@/lib/graphql/apolloClient';
-import { GET_POSTS } from '@/graphql/queries/post';
 import { List } from '@/features/posts/components/list';
+import { Post } from '@/graphql/generated/graphql';
 
-export default async function Posts() {
-  const { data: postsData, error } = await query({
-    query: GET_POSTS,
-  });
+interface Props {
+  posts: Post[];
+}
 
-  if (error || !postsData?.posts) return <>Something went wrong</>;
+export default async function Posts({ posts }: Props) {
+  if (!posts?.length) {
+    return <>There are no posts yet.</>;
+  }
 
-  return <List posts={postsData.posts} />;
+  return <List posts={posts} />;
 };
