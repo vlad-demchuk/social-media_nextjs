@@ -1,6 +1,4 @@
-import { PostsSkeleton } from '@/features/posts/components/skeleton-list';
 import Posts from '@/features/posts/components';
-import { Suspense } from 'react';
 import { query } from '@/lib/graphql/apolloClient';
 import { GET_USER_POSTS } from '@/graphql/queries/post';
 
@@ -28,9 +26,7 @@ export default async function UserPage({
         {name}
       </header>
 
-      <Suspense fallback={<PostsSkeleton count={3} />}>
-        <Posts posts={postsData.userPosts} />
-      </Suspense>
+      <Posts posts={postsData.userPosts} />
     </>
   );
 }

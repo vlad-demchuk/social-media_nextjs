@@ -23,14 +23,8 @@ export const Item = ({ post, children }: Props) => {
       <Card className="hover:shadow-lg transition-all duration-200 p-6">
         <CardContent className="p-0">
           <div className="flex items-start space-x-4">
-            {/*<Avatar>*/}
-            {/*  <AvatarImage src={post.author.avatar} />*/}
-            {/*  <AvatarFallback>{post.author.name[0]}</AvatarFallback>*/}
-            {/*</Avatar>*/}
-
             <div className="flex-1">
               <div className="flex items-center space-x-2 mb-2">
-                {/*<h3 className="font-semibold">{post.author.name}</h3>*/}
                 <span className="text-muted-foreground text-sm">
                       {`@${post.username}`}
                     </span>
@@ -71,18 +65,6 @@ export const Item = ({ post, children }: Props) => {
                     {post.commentsCount}
                   </Button>
                 </Link>
-
-                {/*<Button*/}
-                {/*  variant="ghost"*/}
-                {/*  size="sm"*/}
-                {/*  onClick={() => handleRepost(post.id)}*/}
-                {/*  className={`text-muted-foreground hover:text-social-repost ${*/}
-                {/*    post.reposted ? 'text-social-repost' : ''*/}
-                {/*  }`}*/}
-                {/*>*/}
-                {/*  <Repeat2 className="h-4 w-4 mr-2" />*/}
-                {/*  {post.reposts}*/}
-                {/*</Button>*/}
 
                 <Like
                   postId={post.id}

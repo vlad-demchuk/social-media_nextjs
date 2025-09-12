@@ -1,7 +1,6 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import request from 'graphql-request';
 import { z } from 'zod';
 import { CREATE_POST, DELETE_POST, LIKE_POST, UNLIKE_POST } from '@/graphql/queries/post';
 import { CREATE_COMMENT, DELETE_COMMENT } from '@/graphql/queries/comment';
