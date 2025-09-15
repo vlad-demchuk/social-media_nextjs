@@ -13,7 +13,7 @@ export const BottomNav = ({ navItems, isLoading }: Props) => {
   const pathname = usePathname();
 
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border shadow-soft">
+    <nav className="lg:hidden  z-50 bg-background border-t border-border shadow-soft">
       <div className="flex justify-around items-center py-2 px-1">
         {navItems.map(({ id, icon: Icon, label, href }) => {
           const isActive = pathname === href;

@@ -5,7 +5,11 @@ import { BottomNav } from '@/components/bottom-nav';
 import { authClient } from '@/lib/auth/auth-client';
 import { Bell, MessageCircle, Newspaper, User } from 'lucide-react';
 
-export const Navigation = () => {
+interface Props {
+  placement: 'left' | 'bottom';
+}
+
+export const Navigation = ({ placement }: Props) => {
   const { data: session, isPending } = authClient.useSession();
 
   const navItems = [
@@ -17,14 +21,17 @@ export const Navigation = () => {
 
   return (
     <>
-      <SideNav
-        navItems={navItems}
-        isLoading={isPending}
-      />
-      <BottomNav
-        navItems={navItems}
-        isLoading={isPending}
-      />
+      {placement === 'left' ? (
+        <SideNav
+          navItems={navItems}
+          isLoading={isPending}
+        />
+      ) : (
+        <BottomNav
+          navItems={navItems}
+          isLoading={isPending}
+        />
+      )}
     </>
   );
 };
