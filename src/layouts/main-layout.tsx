@@ -13,7 +13,7 @@ export default function MainLayout({
 
       {/* Middle Zone */}
       <div className="max-w-7xl row w-full mx-auto lg:px-8 overflow-y-auto lg:overflow-y-visible">
-        <div className="flex">
+        <div className="h-full flex">
           {/* Left Navigation */}
           <Navigation placement="left" />
 

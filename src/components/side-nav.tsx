@@ -14,7 +14,7 @@ export const SideNav = ({ navItems, isLoading }: Props) => {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden lg:block w-1/3 py-6 sticky top-16 h-min">
+    <aside className="hidden lg:block w-1/4 py-6 sticky top-16 h-min">
       <Card className="shadow-soft bg-gradient-card border-0">
         <CardContent className="p-6">
           <nav className="space-y-2">
