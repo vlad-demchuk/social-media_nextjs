@@ -1,10 +1,6 @@
 import { HttpLink } from '@apollo/client';
 import { SetContextLink } from '@apollo/client/link/context';
-import {
-  registerApolloClient,
-  ApolloClient,
-  InMemoryCache,
-} from '@apollo/client-integration-nextjs';
+import { ApolloClient, InMemoryCache, registerApolloClient } from '@apollo/client-integration-nextjs';
 import { cookies } from 'next/headers';
 import config from '@/lib/config';
 

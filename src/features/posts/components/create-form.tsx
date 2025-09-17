@@ -15,7 +15,10 @@ export const CreateForm = () => {
 
   return (
     <Card>
-      <form className="space-y-3" action={formAction}>
+      <form
+        className="space-y-3"
+        action={formAction}
+      >
         <CardHeader>
           <div className="flex items-start space-x-4">
             <Avatar>

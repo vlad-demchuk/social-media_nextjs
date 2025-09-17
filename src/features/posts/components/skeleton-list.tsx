@@ -6,7 +6,10 @@ export function PostsSkeleton({ count = 3 }: { count?: number }) {
   return (
     <div className="space-y-4">
       {Array.from({ length: count }).map((_, i) => (
-        <Card key={i} className="shadow-soft border-0">
+        <Card
+          key={i}
+          className="shadow-soft border-0"
+        >
           <CardContent className="p-6">
             <div className="flex items-start gap-4">
               <div className="h-10 w-10 rounded-full bg-muted animate-pulse" />

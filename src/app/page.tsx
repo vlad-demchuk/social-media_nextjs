@@ -1,4 +1,4 @@
-import { ArrowRight, Users, MessageSquare, Heart } from 'lucide-react';
+import { ArrowRight, Heart, MessageSquare, Users } from 'lucide-react';
 import heroImage from '@/assets/auth-hero.jpg';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';

@@ -17,6 +17,8 @@ type Documents = {
     "\n  query GetPostComments($postId: Int!) {\n    comments(postId: $postId) {\n      id\n      content\n      createdAt\n      username\n    }\n  }\n": typeof types.GetPostCommentsDocument,
     "\n  mutation CreateComment($input: CreateCommentInput!) {\n    createComment(input: $input) {\n      code\n      success\n      message\n      comment {\n        id\n        content\n        createdAt\n        username\n      }\n    }\n  }\n": typeof types.CreateCommentDocument,
     "\n  mutation DeleteComment($commentId: Int!) {\n    deleteComment(commentId: $commentId) {\n      code\n      success\n      message\n      commentId\n    }\n  }\n": typeof types.DeleteCommentDocument,
+    "\n  query GetConversations {\n    conversations {\n      id\n      type\n      name\n      createdAt\n      lastMessage {\n        id\n        content\n        createdAt\n        sender {\n          id\n          username\n          image\n        }\n      }\n      participants {\n        id\n        username\n        image\n      }\n    }\n  }\n": typeof types.GetConversationsDocument,
+    "\n  query ConversationMessages($conversationId: Int!) {\n    conversationMessages(conversationId: $conversationId) {\n      id\n      content\n      createdAt\n      updatedAt\n      sender {\n        id\n        username\n        image\n      }\n    }\n  }\n": typeof types.ConversationMessagesDocument,
     "\n  query GetPosts {\n    posts {\n      id\n      content\n      createdAt\n      username\n      likesCount\n      commentsCount\n      isLiked\n    }\n  }\n": typeof types.GetPostsDocument,
     "\n  query GetUserPosts($userName: String!) {\n    userPosts(userName: $userName) {\n      id\n      content\n      createdAt\n      username\n      likesCount\n      commentsCount\n      isLiked\n    }\n  }\n": typeof types.GetUserPostsDocument,
     "\n  query GetPostById($postId: Int!) {\n    post(postId: $postId) {\n      id\n      content\n      createdAt\n      username\n      likesCount\n      commentsCount\n      isLiked\n    }\n  }\n": typeof types.GetPostByIdDocument,
@@ -29,6 +31,8 @@ const documents: Documents = {
     "\n  query GetPostComments($postId: Int!) {\n    comments(postId: $postId) {\n      id\n      content\n      createdAt\n      username\n    }\n  }\n": types.GetPostCommentsDocument,
     "\n  mutation CreateComment($input: CreateCommentInput!) {\n    createComment(input: $input) {\n      code\n      success\n      message\n      comment {\n        id\n        content\n        createdAt\n        username\n      }\n    }\n  }\n": types.CreateCommentDocument,
     "\n  mutation DeleteComment($commentId: Int!) {\n    deleteComment(commentId: $commentId) {\n      code\n      success\n      message\n      commentId\n    }\n  }\n": types.DeleteCommentDocument,
+    "\n  query GetConversations {\n    conversations {\n      id\n      type\n      name\n      createdAt\n      lastMessage {\n        id\n        content\n        createdAt\n        sender {\n          id\n          username\n          image\n        }\n      }\n      participants {\n        id\n        username\n        image\n      }\n    }\n  }\n": types.GetConversationsDocument,
+    "\n  query ConversationMessages($conversationId: Int!) {\n    conversationMessages(conversationId: $conversationId) {\n      id\n      content\n      createdAt\n      updatedAt\n      sender {\n        id\n        username\n        image\n      }\n    }\n  }\n": types.ConversationMessagesDocument,
     "\n  query GetPosts {\n    posts {\n      id\n      content\n      createdAt\n      username\n      likesCount\n      commentsCount\n      isLiked\n    }\n  }\n": types.GetPostsDocument,
     "\n  query GetUserPosts($userName: String!) {\n    userPosts(userName: $userName) {\n      id\n      content\n      createdAt\n      username\n      likesCount\n      commentsCount\n      isLiked\n    }\n  }\n": types.GetUserPostsDocument,
     "\n  query GetPostById($postId: Int!) {\n    post(postId: $postId) {\n      id\n      content\n      createdAt\n      username\n      likesCount\n      commentsCount\n      isLiked\n    }\n  }\n": types.GetPostByIdDocument,
@@ -64,6 +68,14 @@ export function gql(source: "\n  mutation CreateComment($input: CreateCommentInp
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation DeleteComment($commentId: Int!) {\n    deleteComment(commentId: $commentId) {\n      code\n      success\n      message\n      commentId\n    }\n  }\n"): (typeof documents)["\n  mutation DeleteComment($commentId: Int!) {\n    deleteComment(commentId: $commentId) {\n      code\n      success\n      message\n      commentId\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query GetConversations {\n    conversations {\n      id\n      type\n      name\n      createdAt\n      lastMessage {\n        id\n        content\n        createdAt\n        sender {\n          id\n          username\n          image\n        }\n      }\n      participants {\n        id\n        username\n        image\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetConversations {\n    conversations {\n      id\n      type\n      name\n      createdAt\n      lastMessage {\n        id\n        content\n        createdAt\n        sender {\n          id\n          username\n          image\n        }\n      }\n      participants {\n        id\n        username\n        image\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query ConversationMessages($conversationId: Int!) {\n    conversationMessages(conversationId: $conversationId) {\n      id\n      content\n      createdAt\n      updatedAt\n      sender {\n        id\n        username\n        image\n      }\n    }\n  }\n"): (typeof documents)["\n  query ConversationMessages($conversationId: Int!) {\n    conversationMessages(conversationId: $conversationId) {\n      id\n      content\n      createdAt\n      updatedAt\n      sender {\n        id\n        username\n        image\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

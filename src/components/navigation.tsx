@@ -15,8 +15,8 @@ export const Navigation = ({ placement }: Props) => {
   const navItems = [
     { id: 'profile', icon: User, label: 'Profile', href: `/users/${session?.user?.name}` },
     { id: 'explore', icon: Newspaper, label: 'Feed', href: '/feed' },
-    { id: 'notifications', icon: Bell, label: 'Notifications', href: '/notifications' },
     { id: 'messages', icon: MessageCircle, label: 'Messages', href: '/messages' },
+    { id: 'notifications', icon: Bell, label: 'Notifications', href: '/notifications' },
   ];
 
   return (

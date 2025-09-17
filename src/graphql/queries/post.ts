@@ -61,7 +61,7 @@ export const GET_USER_POSTS = gql(`
       isLiked
     }
   }
-`)
+`);
 
 export const GET_POST = gql(`
   query GetPostById($postId: Int!) {
@@ -75,7 +75,7 @@ export const GET_POST = gql(`
       isLiked
     }
   }
-`)
+`);
 
 export const CREATE_POST = gql(`
   mutation CreatePost($input: CreatePostInput!) {

@@ -54,7 +54,7 @@ export default function AuthPage() {
             },
             onSuccess: async () => {
               toast.success('Account created');
-              router.push('/feed')
+              router.push('/feed');
             },
           },
         });

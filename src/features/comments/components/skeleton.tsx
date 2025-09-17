@@ -12,7 +12,10 @@ export const CommentSkeleton = () => {
       {/* Comments list skeleton */}
       <ul className="space-y-3">
         {[0, 1, 2].map((i) => (
-          <li key={i} className="rounded-md border p-3 flex items-start gap-3">
+          <li
+            key={i}
+            className="rounded-md border p-3 flex items-start gap-3"
+          >
             <div className="h-9 w-9 rounded-full bg-muted animate-pulse" />
             <div className="flex-1 min-w-0 space-y-2">
               <div className="flex items-center gap-2">

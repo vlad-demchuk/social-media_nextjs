@@ -26,14 +26,12 @@ export const Item = ({ post, children }: Props) => {
             <div className="flex-1">
               <div className="flex items-center space-x-2 mb-2">
                 <span className="text-muted-foreground text-sm">
-                      {`@${post.username}`}
-                    </span>
+                  {`@${post.username}`}
+                </span>
+                <span className="text-muted-foreground text-sm">·</span>
                 <span className="text-muted-foreground text-sm">
-                      ·
-                    </span>
-                <span className="text-muted-foreground text-sm">
-                      {new Date(post.createdAt).toLocaleString()}
-                    </span>
+                  {new Date(post.createdAt).toLocaleString()}
+                </span>
 
                 <ThreeDotMenu
                   postUserName={post.username}
