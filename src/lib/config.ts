@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 const envSchema = z.object({
   NEXT_PUBLIC_BETTER_AUTH_URL: z.string().url(),
@@ -6,7 +6,7 @@ const envSchema = z.object({
   DEV_BETTER_AUTH_URL: z.string().url(),
   DEV_GRAPHQL_URL: z.string().url(),
   NODE_ENV: z.enum(['development', 'production', 'test']),
-})
+});
 
 const env = envSchema.parse({
   NEXT_PUBLIC_BETTER_AUTH_URL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL,
@@ -14,7 +14,7 @@ const env = envSchema.parse({
   DEV_BETTER_AUTH_URL: 'http://localhost:3000/api/auth',
   DEV_GRAPHQL_URL: 'http://localhost:3000/graphql/',
   NODE_ENV: process.env.NODE_ENV,
-})
+});
 
 export const config = {
   auth: {
@@ -25,6 +25,6 @@ export const config = {
   },
   isDev: env.NODE_ENV === 'development',
   isProd: env.NODE_ENV === 'production',
-} as const
+} as const;
 
-export default config
+export default config;
