@@ -1,13 +1,16 @@
 import { AppHeader } from '@/components/app-header';
 import { Navigation } from '@/components/navigation';
+import { cn } from '@/lib/utils';
 
 export default function MainLayout({
+  containerClassNames,
   children,
 }: Readonly<{
   children: React.ReactNode;
+  containerClassNames?: string;
 }>) {
   return (
-    <div className="h-screen lg:min-h-screen lg:h-auto grid grid-rows-[auto_1fr_auto] lg:grid-rows-[auto_1fr] bg-gradient-hero">
+    <div className={cn("h-screen lg:min-h-screen lg:h-auto grid grid-rows-[auto_1fr_auto] lg:grid-rows-[auto_1fr] bg-gradient-hero", containerClassNames)}>
       {/* Top Navigation */}
       <AppHeader />
 

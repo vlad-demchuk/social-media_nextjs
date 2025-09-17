@@ -11,6 +11,7 @@ export const GET_CONVERSATIONS = gql(`
         id
         content
         createdAt
+        updatedAt
         sender {
           id
           username
