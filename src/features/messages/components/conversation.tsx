@@ -3,15 +3,37 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { SendHorizonal } from 'lucide-react';
 import { MessageList } from '@/features/messages/components/message-list';
+import { useMutation } from '@apollo/client/react';
+import { CREATE_CONVERSATION_MESSAGE, GET_CONVERSATION_MESSAGES } from '@/graphql/queries/message';
+import { FormEvent, useState } from 'react';
 
 interface Props {
   conversation: IConversation | null;
 }
 
 export const Conversation = ({ conversation }: Props) => {
+  const [message, setMessage] = useState('');
+
   const { type, participants } = conversation || {};
   const isDirect = type === 'direct';
   const participant = isDirect ? participants?.[0] : null;
+
+  const [sendMessage, { data, loading, error }] = useMutation(CREATE_CONVERSATION_MESSAGE, {
+    refetchQueries: [GET_CONVERSATION_MESSAGES],
+  });
+
+  console.log('>>> mutation:', { data, loading, error });
+
+  const handleSendMessage = async (e: FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await sendMessage({ variables: { conversationId: conversation?.id, content: message } });
+      setMessage('');
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   if (!conversation) {
     return (<div className="flex items-center justify-center">Select a chat to start messaging</div>);
@@ -26,18 +48,25 @@ export const Conversation = ({ conversation }: Props) => {
       <MessageList conversationId={conversation.id} />
 
       <footer className="flex justify-center items-center">
-        <Input
-          className="size-full border-none focus-visible:ring-0 bg-transparent! ring-0 shadow-none outline-none rounded-none"
-          placeholder="Write a message..."
-        />
-
-        <Button
-          variant="secondary"
-          size="icon"
-          className="size-8 m-1"
+        <form
+          className="flex size-full"
+          onSubmit={handleSendMessage}
         >
-          <SendHorizonal />
-        </Button>
+          <Input
+            className="size-full border-none focus-visible:ring-0 bg-transparent! ring-0 shadow-none outline-none rounded-none"
+            placeholder="Write a message..."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+
+          <Button
+            variant="secondary"
+            size="icon"
+            className="size-8 m-1"
+          >
+            <SendHorizonal />
+          </Button>
+        </form>
       </footer>
     </section>
   );

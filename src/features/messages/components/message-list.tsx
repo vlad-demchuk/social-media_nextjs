@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client/react';
-import { GET_CONVERSATION_MESSAGES } from '@/graphql/queries/conversation';
+import { GET_CONVERSATION_MESSAGES } from '@/graphql/queries/message';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { authClient } from '@/lib/auth/auth-client';

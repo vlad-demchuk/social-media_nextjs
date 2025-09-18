@@ -27,18 +27,13 @@ export const GET_CONVERSATIONS = gql(`
   }
 `);
 
-export const GET_CONVERSATION_MESSAGES = gql(`
-  query ConversationMessages($conversationId: Int!) {
-    conversationMessages(conversationId: $conversationId) {
-      id
-      content
-      createdAt
-      updatedAt
-      sender {
-        id
-        username
-        image
-      }
+export const CREATE_CONVERSATION = gql(`
+  mutation CreateConversation($userId: Int!) {
+    createConversation(userId: $userId) {
+      code
+      success
+      message
+      conversationId
     }
   }
 `)

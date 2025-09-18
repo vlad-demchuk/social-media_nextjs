@@ -39,7 +39,7 @@ export default function MessagesPage() {
           />
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel>
+        <ResizablePanel defaultSize={70}>
           <Conversation conversation={selectedConversation} />
         </ResizablePanel>
       </ResizablePanelGroup>
