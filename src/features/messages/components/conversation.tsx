@@ -27,6 +27,8 @@ export const Conversation = ({ conversation }: Props) => {
   const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (!conversation?.id) return;
+
     try {
       await sendMessage({ variables: { conversationId: conversation?.id, content: message } });
       setMessage('');
@@ -53,6 +55,7 @@ export const Conversation = ({ conversation }: Props) => {
           onSubmit={handleSendMessage}
         >
           <Input
+            type="text"
             className="size-full border-none focus-visible:ring-0 bg-transparent! ring-0 shadow-none outline-none rounded-none"
             placeholder="Write a message..."
             value={message}
@@ -63,6 +66,7 @@ export const Conversation = ({ conversation }: Props) => {
             variant="secondary"
             size="icon"
             className="size-8 m-1"
+            type="submit"
           >
             <SendHorizonal />
           </Button>
