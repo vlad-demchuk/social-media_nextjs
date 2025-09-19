@@ -28,6 +28,7 @@ type Documents = {
     "\n  mutation DeletePost($postId: Int!) {\n    deletePost(postId: $postId) {\n      code\n      success\n      message\n      postId\n    }\n  }\n": typeof types.DeletePostDocument,
     "\n  mutation LikePost($postId: Int!) {\n    likePost(postId: $postId) {\n      code\n      success\n      message\n      post {\n        id\n        content\n        createdAt\n        username\n        likesCount\n        commentsCount\n      }\n    }\n  }\n": typeof types.LikePostDocument,
     "\n  mutation UnlikePost($postId: Int!) {\n    unlikePost(postId: $postId) {\n      code\n      success\n      message\n      post {\n        id\n        content\n        createdAt\n        username\n        likesCount\n        commentsCount\n      }\n    }\n  }\n": typeof types.UnlikePostDocument,
+    "\n  query SearchUser($query: String!) {\n    searchUser(query: $query) {\n      id\n      username\n      email\n      createdAt\n      emailVerified\n      image\n      updatedAt\n    }\n  }\n": typeof types.SearchUserDocument,
 };
 const documents: Documents = {
     "\n  query GetPostComments($postId: Int!) {\n    comments(postId: $postId) {\n      id\n      content\n      createdAt\n      username\n    }\n  }\n": types.GetPostCommentsDocument,
@@ -44,6 +45,7 @@ const documents: Documents = {
     "\n  mutation DeletePost($postId: Int!) {\n    deletePost(postId: $postId) {\n      code\n      success\n      message\n      postId\n    }\n  }\n": types.DeletePostDocument,
     "\n  mutation LikePost($postId: Int!) {\n    likePost(postId: $postId) {\n      code\n      success\n      message\n      post {\n        id\n        content\n        createdAt\n        username\n        likesCount\n        commentsCount\n      }\n    }\n  }\n": types.LikePostDocument,
     "\n  mutation UnlikePost($postId: Int!) {\n    unlikePost(postId: $postId) {\n      code\n      success\n      message\n      post {\n        id\n        content\n        createdAt\n        username\n        likesCount\n        commentsCount\n      }\n    }\n  }\n": types.UnlikePostDocument,
+    "\n  query SearchUser($query: String!) {\n    searchUser(query: $query) {\n      id\n      username\n      email\n      createdAt\n      emailVerified\n      image\n      updatedAt\n    }\n  }\n": types.SearchUserDocument,
 };
 
 /**
@@ -116,6 +118,10 @@ export function gql(source: "\n  mutation LikePost($postId: Int!) {\n    likePos
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation UnlikePost($postId: Int!) {\n    unlikePost(postId: $postId) {\n      code\n      success\n      message\n      post {\n        id\n        content\n        createdAt\n        username\n        likesCount\n        commentsCount\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation UnlikePost($postId: Int!) {\n    unlikePost(postId: $postId) {\n      code\n      success\n      message\n      post {\n        id\n        content\n        createdAt\n        username\n        likesCount\n        commentsCount\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query SearchUser($query: String!) {\n    searchUser(query: $query) {\n      id\n      username\n      email\n      createdAt\n      emailVerified\n      image\n      updatedAt\n    }\n  }\n"): (typeof documents)["\n  query SearchUser($query: String!) {\n    searchUser(query: $query) {\n      id\n      username\n      email\n      createdAt\n      emailVerified\n      image\n      updatedAt\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

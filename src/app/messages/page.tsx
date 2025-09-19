@@ -13,18 +13,16 @@ export default function MessagesPage() {
 
   const { data: conversationsData, loading } = useQuery(GET_CONVERSATIONS);
 
-  const handleSelectChat = (conversation: IConversation) => {
+  const handleSelectConversation = (conversation: IConversation) => {
     setSelectedConversation(conversation);
   };
-
-  console.log('>>>>> conversationsData?.conversations:', conversationsData?.conversations);
 
   return (
     <>
       <ResizablePanelGroup
         className="h-full max-h-[calc(100vh-theme(spacing.16)-(theme(spacing.8)*2))] rounded-lg border overflow-y-hidden"
         direction="horizontal"
-        autoSaveId="socialMediaChatDimensions"
+        autoSaveId="socialMediaConversationDimensions"
       >
         <ResizablePanel
           defaultSize={30}
@@ -34,8 +32,8 @@ export default function MessagesPage() {
           <SidebarList
             conversations={conversationsData?.conversations || []}
             isLoading={loading}
-            selectedChat={selectedConversation}
-            onChatSelect={handleSelectChat}
+            selectedConversation={selectedConversation}
+            onConversationSelect={handleSelectConversation}
           />
         </ResizablePanel>
         <ResizableHandle />
