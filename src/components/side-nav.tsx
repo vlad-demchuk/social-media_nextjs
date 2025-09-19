@@ -14,8 +14,8 @@ export const SideNav = ({ navItems, isLoading }: Props) => {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden lg:block w-1/4 py-6 sticky top-16 h-min">
-      <Card className="shadow-soft bg-gradient-card border-0">
+    <aside className="hidden lg:block w-50 shrink-0 py-6 sticky top-16 h-min">
+      <Card className="shadow-soft bg-gradient-card border-0 py-0">
         <CardContent className="p-6">
           <nav className="space-y-2">
             {navItems.map(({ id, icon: Icon, label, href }) => {

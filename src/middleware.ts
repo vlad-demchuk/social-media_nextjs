@@ -21,5 +21,5 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   runtime: 'nodejs',
-  matcher: ['/', '/auth', '/feed', '/feed/:path*'],
+  matcher: ['/', '/auth', '/feed', '/feed/:path*', '/users/:path', '/messages', '/notifications'],
 };

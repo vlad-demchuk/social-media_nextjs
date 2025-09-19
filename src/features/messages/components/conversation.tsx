@@ -14,15 +14,14 @@ interface Props {
 export const Conversation = ({ conversation }: Props) => {
   const [message, setMessage] = useState('');
 
-  const { type, participants } = conversation || {};
-  const isDirect = type === 'direct';
-  const participant = isDirect ? participants?.[0] : null;
-
+  // TODO: Implement optimistic update to avoid delay
   const [sendMessage, { data, loading, error }] = useMutation(CREATE_CONVERSATION_MESSAGE, {
     refetchQueries: [GET_CONVERSATION_MESSAGES],
   });
 
-  console.log('>>> mutation:', { data, loading, error });
+  const { type, participants } = conversation || {};
+  const isDirect = type === 'direct';
+  const participant = isDirect ? participants?.[0] : null;
 
   const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();
@@ -38,7 +37,7 @@ export const Conversation = ({ conversation }: Props) => {
   };
 
   if (!conversation) {
-    return (<div className="flex items-center justify-center">Select a chat to start messaging</div>);
+    return (<div className="h-full flex items-center justify-center">Select a chat to start messaging</div>);
   }
 
   return (

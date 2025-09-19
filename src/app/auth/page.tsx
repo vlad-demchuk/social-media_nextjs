@@ -26,9 +26,17 @@ export default function AuthPage() {
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    const cyrillicPattern = /[\u0400-\u04FF]/;
+
+    if (cyrillicPattern.test(name)) {
+      toast.error('Cyrillic characters are not allowed. Please use Latin characters.');
+      setIsLoading(false);
+      return;
+    }
+
     try {
       if (activeTab === 'signin') {
-        const res = await authClient.signIn.email({
+        await authClient.signIn.email({
           email,
           password,
           callbackURL: '/feed',
@@ -36,15 +44,13 @@ export default function AuthPage() {
             onError: (ctx) => {
               toast.error(ctx.error.message);
             },
-            onSuccess: async (ctx) => {
+            onSuccess: async () => {
               toast.success('Signed in successfully');
-              console.log('>>>>> ctx:', ctx);
             },
           },
         });
-        console.log('>>>>> signIn res:', res);
       } else {
-        const res = await authClient.signUp.email({
+        await authClient.signUp.email({
           email,
           name,
           password,
@@ -58,7 +64,6 @@ export default function AuthPage() {
             },
           },
         });
-        console.log('>>>>> signUp res:', res);
       }
     } finally {
       setIsLoading(false);
