@@ -30,4 +30,20 @@ export const CREATE_CONVERSATION_MESSAGE = gql(`
       }
     }
   }
+`);
+
+export const MESSAGE_ADDED_SUBSCRIPTION = gql(`
+  subscription MessageAdded {
+    messageAdded {
+      id
+      content
+      createdAt
+      updatedAt
+      sender {
+        id
+        username
+        image
+      }
+    }
+  }
 `)
