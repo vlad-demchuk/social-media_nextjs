@@ -7,6 +7,15 @@ export const GET_CONVERSATIONS = gql(`
       type
       name
       createdAt
+      participants {
+        id
+        username
+        email
+        createdAt
+        emailVerified
+        image
+        updatedAt
+      }
       lastMessage {
         id
         content
@@ -15,13 +24,12 @@ export const GET_CONVERSATIONS = gql(`
         sender {
           id
           username
+          email
+          createdAt
+          emailVerified
           image
+          updatedAt
         }
-      }
-      participants {
-        id
-        username
-        image
       }
     }
   }
@@ -33,7 +41,36 @@ export const CREATE_CONVERSATION = gql(`
       code
       success
       message
-      conversationId
+      conversation {
+        id
+        type
+        name
+        createdAt
+        participants {
+          id
+          username
+          email
+          createdAt
+          emailVerified
+          image
+          updatedAt
+        }
+        lastMessage {
+          id
+          content
+          createdAt
+          updatedAt
+          sender {
+            id
+            username
+            email
+            createdAt
+            emailVerified
+            image
+            updatedAt
+          }
+        }
+      }
     }
   }
 `)

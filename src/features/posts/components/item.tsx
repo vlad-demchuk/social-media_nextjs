@@ -26,7 +26,7 @@ export const Item = ({ post, children }: Props) => {
             <div className="flex-1">
               <div className="flex items-center space-x-2 mb-2">
                 <span className="text-muted-foreground text-sm">
-                  {`@${post.username}`}
+                  {`@${post.owner.username}`}
                 </span>
                 <span className="text-muted-foreground text-sm">·</span>
                 <span className="text-muted-foreground text-sm">
@@ -34,7 +34,7 @@ export const Item = ({ post, children }: Props) => {
                 </span>
 
                 <ThreeDotMenu
-                  postUserName={post.username}
+                  postUserName={post.owner.username}
                   onDelete={deletePost}
                 >
                   <Button

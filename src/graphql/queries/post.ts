@@ -41,7 +41,15 @@ export const GET_POSTS = gql(`
       id
       content
       createdAt
-      username
+      owner {
+        id
+        username
+        email
+        image
+        createdAt
+        updatedAt
+        emailVerified
+      }
       likesCount
       commentsCount
       isLiked
@@ -55,7 +63,15 @@ export const GET_USER_POSTS = gql(`
       id
       content
       createdAt
-      username
+      owner {
+        id
+        username
+        email
+        image
+        createdAt
+        updatedAt
+        emailVerified
+      }
       likesCount
       commentsCount
       isLiked
@@ -69,7 +85,15 @@ export const GET_POST = gql(`
       id
       content
       createdAt
-      username
+      owner {
+        id
+        username
+        email
+        image
+        createdAt
+        emailVerified
+        updatedAt
+      }
       likesCount
       commentsCount
       isLiked
@@ -87,7 +111,15 @@ export const CREATE_POST = gql(`
         id
         content
         createdAt
-        username
+        owner {
+          id
+          username
+          email
+          image
+          createdAt
+          updatedAt
+          emailVerified
+        }
         likesCount
         commentsCount
       }
@@ -101,7 +133,6 @@ export const DELETE_POST = gql(`
       code
       success
       message
-      postId
     }
   }
 `);
@@ -116,7 +147,12 @@ export const LIKE_POST = gql(`
         id
         content
         createdAt
-        username
+        owner {
+          id
+          username
+          email
+          image
+        }
         likesCount
         commentsCount
       }
@@ -134,7 +170,12 @@ export const UNLIKE_POST = gql(`
         id
         content
         createdAt
-        username
+        owner {
+          id
+          username
+          email
+          image
+        }
         likesCount
         commentsCount
       }

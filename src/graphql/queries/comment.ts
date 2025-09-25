@@ -6,7 +6,15 @@ export const GET_POST_COMMENTS = gql(`
       id
       content
       createdAt
-      username
+      author {
+        id
+        username
+        email
+        image
+        createdAt
+        updatedAt
+        emailVerified
+      }
     }
   }
 `);
@@ -21,7 +29,15 @@ export const CREATE_COMMENT = gql(`
         id
         content
         createdAt
-        username
+        author {
+          id
+          username
+          email
+          image
+          createdAt
+          updatedAt
+          emailVerified
+        }
       }
     }
   }
