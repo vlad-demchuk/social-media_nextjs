@@ -15,7 +15,7 @@ function makeClient() {
 
   const wsLink = new GraphQLWsLink(
     createClient({
-      url: 'ws://localhost:4000/graphql',
+      url: config.graphqlWs.url,
       shouldRetry: (errOrCloseEvent) => {
         console.log('WebSocket retry check:', errOrCloseEvent);
         return true; // Retry on all errors for debugging
