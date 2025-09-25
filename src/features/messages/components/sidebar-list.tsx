@@ -1,8 +1,6 @@
-import { Archive, MessageSquarePlus, Trash2 } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Conversation } from '@/graphql/generated/graphql';
-import { Button } from '@/components/ui/button';
 import { NewConversation } from '@/features/messages/components/new-conversation';
 
 interface Props {
