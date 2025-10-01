@@ -6,6 +6,7 @@ import config from '@/lib/config';
 import { createClient } from 'graphql-ws';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { authClient } from '@/lib/auth/auth-client';
 
 function makeClient() {
   const httpLink = new HttpLink({
@@ -16,6 +17,14 @@ function makeClient() {
   const wsLink = new GraphQLWsLink(
     createClient({
       url: config.graphqlWs.url,
+      connectionParams: async () => {
+        const session = await authClient.getSession();
+        if (!session) {
+          return {};
+        }
+
+        return { session };
+      },
       shouldRetry: (errOrCloseEvent) => {
         console.log('WebSocket retry check:', errOrCloseEvent);
         return true; // Retry on all errors for debugging
