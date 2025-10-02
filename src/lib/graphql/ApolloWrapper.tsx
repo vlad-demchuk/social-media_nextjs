@@ -18,6 +18,11 @@ function makeClient() {
     createClient({
       url: config.graphqlWs.url,
       connectionParams: async () => {
+        // TODO: Implement token verification for websockets
+        // At the moment it's kinda challenge since NextJs rewrites don't work for ws/wss protocol,
+        // and the server placed on another domain, that is the issue for cookie. As a possible workaround - JWT token.
+        // For now just skipping this passing the session object from client. NOT SECURE!!!
+
         const session = await authClient.getSession();
         if (!session) {
           return {};
