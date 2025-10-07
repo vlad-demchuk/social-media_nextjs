@@ -6,12 +6,17 @@ import { MessageList } from '@/features/messages/components/message-list';
 import { useMutation } from '@apollo/client/react';
 import { CREATE_CONVERSATION_MESSAGE, GET_CONVERSATION_MESSAGES } from '@/graphql/queries/message';
 import { FormEvent, useState } from 'react';
+import { getParticipant } from '@/utils/utils';
+import { authClient } from '@/lib/auth/auth-client';
 
 interface Props {
   conversation: IConversation | null;
 }
 
 export const Conversation = ({ conversation }: Props) => {
+  const { data: session } = authClient.useSession();
+  const currentUserId = session?.user.id ?? null;
+
   const [message, setMessage] = useState('');
 
   // TODO: Implement optimistic update to avoid delay
@@ -19,9 +24,9 @@ export const Conversation = ({ conversation }: Props) => {
     refetchQueries: [GET_CONVERSATION_MESSAGES],
   });
 
-  const { type, participants } = conversation || {};
+  const { type, participants = [] } = conversation || {};
   const isDirect = type === 'direct';
-  const participant = isDirect ? participants?.[0] : null;
+  const participant = getParticipant(participants, currentUserId);
 
   const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();

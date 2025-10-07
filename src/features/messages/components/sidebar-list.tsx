@@ -1,7 +1,9 @@
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Conversation } from '@/graphql/generated/graphql';
+import { Conversation, User } from '@/graphql/generated/graphql';
 import { NewConversation } from '@/features/messages/components/new-conversation';
+import { authClient } from '@/lib/auth/auth-client';
+import { getParticipant } from '@/utils/utils';
 
 interface Props {
   conversations: Conversation[],
@@ -11,6 +13,9 @@ interface Props {
 }
 
 export const SidebarList = ({ conversations, isLoading, selectedConversation, onConversationSelect }: Props) => {
+  const { data: session } = authClient.useSession();
+  const currentUserId = session?.user.id ?? null;
+
   if (isLoading) return 'Loading...';
 
   return (
@@ -26,38 +31,42 @@ export const SidebarList = ({ conversations, isLoading, selectedConversation, on
 
       <ScrollArea className="h-[calc(100%-40px)]">
         <div className="divide-y">
-          {conversations.map((conversation) => (
-            <button
-              key={conversation.id}
-              onClick={() => onConversationSelect(conversation)}
-              className={`cursor-pointer w-full px-3 py-3 text-left hover:bg-accent/50 transition-colors ${
-                selectedConversation?.id === conversation.id ? 'bg-accent/50' : ''
-              }`}
-            >
-              <div className="flex items-start gap-3">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={conversation.participants[0].image || undefined} />
-                  <AvatarFallback className="text-xs">
-                    {conversation.participants[0].username[0]}
-                  </AvatarFallback>
-                </Avatar>
+          {conversations.map((conversation) => {
+            const participant = getParticipant(conversation.participants, currentUserId);
 
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-2 mb-1">
+            return (
+              <button
+                key={conversation.id}
+                onClick={() => onConversationSelect(conversation)}
+                className={`cursor-pointer w-full px-3 py-3 text-left hover:bg-accent/50 transition-colors ${
+                  selectedConversation?.id === conversation.id ? 'bg-accent/50' : ''
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={participant?.image || undefined} />
+                    <AvatarFallback className="text-xs">
+                      {participant?.username[0]}
+                    </AvatarFallback>
+                  </Avatar>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2 mb-1">
                     <span className="text-sm">
-                      {conversation.participants[0].username}
+                      {participant?.username}
                     </span>
-                    <span className="text-xs text-muted-foreground truncate">
+                      <span className="text-xs text-muted-foreground truncate">
                       {new Date(conversation.lastMessage?.createdAt).toLocaleString()}
                     </span>
-                  </div>
-                  <div className="text-xs text-muted-foreground truncate">
-                    {conversation.lastMessage?.content}
+                    </div>
+                    <div className="text-xs text-muted-foreground truncate">
+                      {conversation.lastMessage?.content}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </button>
-          ))}
+              </button>
+            );
+          })}
         </div>
       </ScrollArea>
     </section>

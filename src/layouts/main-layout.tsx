@@ -6,6 +6,8 @@ import { cn } from '@/lib/utils';
 import { useSubscription } from '@apollo/client/react';
 import { toast } from 'sonner';
 import { NOTIFICATION_ADDED_SUBSCRIPTION } from '@/graphql/queries/notification';
+import { MESSAGE_ADDED_SUBSCRIPTION } from '@/graphql/queries/message';
+import { usePathname } from 'next/navigation';
 
 export default function MainLayout({
   containerClassNames,
@@ -14,15 +16,30 @@ export default function MainLayout({
   children: React.ReactNode;
   containerClassNames?: string;
 }>) {
-    const subscription = useSubscription(NOTIFICATION_ADDED_SUBSCRIPTION, {
+  const pathname = usePathname();
+
+  const notificationSubscription = useSubscription(NOTIFICATION_ADDED_SUBSCRIPTION, {
     onData: ({ data }) => {
       console.log('New notification received:', data?.data?.notificationAdded);
-      data?.data?.notificationAdded && toast(data?.data?.notificationAdded?.preview)
+      data?.data?.notificationAdded && toast(data?.data?.notificationAdded?.preview);
+    },
+  });
+
+  const messageSubscription = useSubscription(MESSAGE_ADDED_SUBSCRIPTION, {
+    skip: pathname === '/messages',
+    onData: ({ data }) => {
+      console.log('New message received:', data?.data?.messageAdded);
+      data?.data?.messageAdded && toast(data?.data?.messageAdded.content);
     },
   });
 
   return (
-    <div className={cn("h-screen lg:min-h-screen lg:h-auto grid grid-rows-[auto_1fr_auto] lg:grid-rows-[auto_1fr] bg-gradient-hero", containerClassNames)}>
+    <div
+      className={cn(
+        'h-screen lg:min-h-screen lg:h-auto grid grid-rows-[auto_1fr_auto] lg:grid-rows-[auto_1fr] bg-gradient-hero',
+        containerClassNames,
+      )}
+    >
       {/* Top Navigation */}
       <AppHeader />
 

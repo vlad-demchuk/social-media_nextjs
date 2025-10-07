@@ -5,23 +5,36 @@ import { SidebarList } from '@/features/messages/components/sidebar-list';
 import { Conversation } from '@/features/messages/components/conversation';
 import { useState } from 'react';
 import { useQuery, useSubscription } from '@apollo/client/react';
-import { GET_CONVERSATIONS } from '@/graphql/queries/conversation';
-import { Conversation as IConversation } from '@/graphql/generated/graphql';
-import { MESSAGE_ADDED_SUBSCRIPTION } from '@/graphql/queries/message';
+import { CONVERSATIONS_UPDATED_SUBSCRIPTION, GET_CONVERSATIONS } from '@/graphql/queries/conversation';
+import { Conversation as IConversation, GetConversationsQuery } from '@/graphql/generated/graphql';
 import { toast } from 'sonner';
 
 export default function MessagesPage() {
-  const subscription = useSubscription(MESSAGE_ADDED_SUBSCRIPTION, {
-    onData: ({ data }) => {
-      console.log('New message received:', data?.data?.messageAdded);
-      data?.data?.messageAdded && toast(data?.data?.messageAdded.content)
-    },
-  });
-
-
   const [selectedConversation, setSelectedConversation] = useState<IConversation | null>(null);
 
-  const { data: conversationsData, loading } = useQuery(GET_CONVERSATIONS);
+  const { data: conversationsData, loading } = useQuery(GET_CONVERSATIONS, {
+    fetchPolicy: 'network-only',
+  });
+
+  const messageSubscription = useSubscription(CONVERSATIONS_UPDATED_SUBSCRIPTION, {
+    onData: ({ data, client }) => {
+      console.log('Updated conversation:', data?.data?.conversationsUpdated);
+      data?.data?.conversationsUpdated && toast('Conversation updated');
+
+      if (data?.data?.conversationsUpdated) {
+        const updated = data.data.conversationsUpdated;
+
+        client.cache.updateQuery<GetConversationsQuery>({ query: GET_CONVERSATIONS }, (existing) => {
+          if (!existing) return;
+          const filtered = existing.conversations.filter(c => c.id !== updated.id);
+          return {
+            ...existing,
+            conversations: [updated, ...filtered],
+          } as GetConversationsQuery;
+        });
+      }
+    },
+  });
 
   const handleSelectConversation = (conversation: IConversation) => {
     setSelectedConversation(conversation);

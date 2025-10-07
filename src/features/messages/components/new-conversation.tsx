@@ -5,13 +5,13 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useState } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client/react';
-import { CREATE_CONVERSATION } from '@/graphql/queries/conversation';
+import { CREATE_CONVERSATION, GET_CONVERSATIONS } from '@/graphql/queries/conversation';
 import { SEARCH_USER } from '@/graphql/queries/user';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Conversation } from '@/graphql/generated/graphql';
 
 interface Props {
-  onConversationSelect: (conversation: Conversation) => void
+  onConversationSelect: (conversation: Conversation) => void;
 }
 
 export const NewConversation = ({ onConversationSelect }: Props) => {
@@ -29,19 +29,21 @@ export const NewConversation = ({ onConversationSelect }: Props) => {
 
   const handleCreate = async (userId: number) => {
     const response = await createConversation({ variables: { userId } });
-    console.log('>>>>> response:', response);
     if (response?.data?.createConversation.success) {
       // TODO: Change response to return conversation in proper format
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      onConversationSelect({ id: response?.data?.createConversation?.conversationId });
-      setOpen(false)
+      onConversationSelect(response?.data?.createConversation?.conversation);
+      setOpen(false);
       setSearch('');
     }
   };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover
+      open={open}
+      onOpenChange={setOpen}
+    >
       <PopoverTrigger asChild>
         <Button
           variant="ghost"

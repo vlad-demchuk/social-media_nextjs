@@ -7,6 +7,15 @@ export const GET_CONVERSATIONS = gql(`
       type
       name
       createdAt
+      creator {
+        id
+        username
+        email
+        createdAt
+        emailVerified
+        image
+        updatedAt
+      }
       participants {
         id
         username
@@ -46,6 +55,15 @@ export const CREATE_CONVERSATION = gql(`
         type
         name
         createdAt
+        creator {
+          id
+          username
+          email
+          createdAt
+          emailVerified
+          image
+          updatedAt
+        }
         participants {
           id
           username
@@ -69,6 +87,50 @@ export const CREATE_CONVERSATION = gql(`
             image
             updatedAt
           }
+        }
+      }
+    }
+  }
+`);
+
+export const CONVERSATIONS_UPDATED_SUBSCRIPTION = gql(`
+  subscription ConversationsUpdated {
+    conversationsUpdated {
+      id
+      type
+      name
+      createdAt
+      creator {
+        id
+        username
+        email
+        createdAt
+        emailVerified
+        image
+        updatedAt
+      }
+      participants {
+        id
+        username
+        email
+        createdAt
+        emailVerified
+        image
+        updatedAt
+      }
+      lastMessage {
+        id
+        content
+        createdAt
+        updatedAt
+        sender {
+          id
+          username
+          email
+          createdAt
+          emailVerified
+          image
+          updatedAt
         }
       }
     }
