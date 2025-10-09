@@ -8,18 +8,24 @@ import { useQuery, useSubscription } from '@apollo/client/react';
 import { CONVERSATIONS_UPDATED_SUBSCRIPTION, GET_CONVERSATIONS } from '@/graphql/queries/conversation';
 import { Conversation as IConversation, GetConversationsQuery } from '@/graphql/generated/graphql';
 import { toast } from 'sonner';
+import { authClient } from '@/lib/auth/auth-client';
 
 export default function MessagesPage() {
+  const { data: session } = authClient.useSession();
+  const userId = session?.user.id ? Number(session?.user.id) : null;
+
   const [selectedConversation, setSelectedConversation] = useState<IConversation | null>(null);
 
   const { data: conversationsData, loading } = useQuery(GET_CONVERSATIONS, {
     fetchPolicy: 'network-only',
   });
 
-  const messageSubscription = useSubscription(CONVERSATIONS_UPDATED_SUBSCRIPTION, {
+  const conversationsSubscription = useSubscription(CONVERSATIONS_UPDATED_SUBSCRIPTION, {
     onData: ({ data, client }) => {
       console.log('Updated conversation:', data?.data?.conversationsUpdated);
-      data?.data?.conversationsUpdated && toast('Conversation updated');
+      const updatedConversation = data?.data?.conversationsUpdated;
+
+      if (!updatedConversation) return;
 
       if (data?.data?.conversationsUpdated) {
         const updated = data.data.conversationsUpdated;
