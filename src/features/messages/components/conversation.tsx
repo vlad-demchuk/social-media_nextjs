@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { SendHorizonal } from 'lucide-react';
 import { MessageList } from '@/features/messages/components/message-list';
 import { useMutation } from '@apollo/client/react';
-import { CREATE_CONVERSATION_MESSAGE, GET_CONVERSATION_MESSAGES } from '@/graphql/queries/message';
+import { CREATE_CONVERSATION_MESSAGE } from '@/graphql/queries/message';
 import { FormEvent, useState } from 'react';
 import { getParticipant } from '@/utils/utils';
 import { authClient } from '@/lib/auth/auth-client';
@@ -20,9 +20,7 @@ export const Conversation = ({ conversation }: Props) => {
   const [message, setMessage] = useState('');
 
   // TODO: Implement optimistic update to avoid delay
-  const [sendMessage, { data, loading, error }] = useMutation(CREATE_CONVERSATION_MESSAGE, {
-    refetchQueries: [GET_CONVERSATION_MESSAGES],
-  });
+  const [sendMessage, { data, loading, error }] = useMutation(CREATE_CONVERSATION_MESSAGE);
 
   const { type, participants = [] } = conversation || {};
   const isDirect = type === 'direct';

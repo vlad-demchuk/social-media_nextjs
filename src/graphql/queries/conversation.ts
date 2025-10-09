@@ -27,6 +27,7 @@ export const GET_CONVERSATIONS = gql(`
       }
       lastMessage {
         id
+        conversationId
         content
         createdAt
         updatedAt
@@ -75,6 +76,7 @@ export const CREATE_CONVERSATION = gql(`
         }
         lastMessage {
           id
+          conversationId
           content
           createdAt
           updatedAt
@@ -120,6 +122,7 @@ export const CONVERSATIONS_UPDATED_SUBSCRIPTION = gql(`
       }
       lastMessage {
         id
+        conversationId
         content
         createdAt
         updatedAt

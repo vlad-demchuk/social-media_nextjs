@@ -4,6 +4,7 @@ export const GET_CONVERSATION_MESSAGES = gql(`
   query ConversationMessages($conversationId: Int!) {
     conversationMessages(conversationId: $conversationId) {
       id
+      conversationId
       content
       createdAt
       updatedAt
@@ -24,6 +25,7 @@ export const CREATE_CONVERSATION_MESSAGE = gql(`
       message
       createdMessage {
         id
+        conversationId
         content
         createdAt
         updatedAt
@@ -38,6 +40,7 @@ export const MESSAGE_ADDED_SUBSCRIPTION = gql(`
       id
       content
       createdAt
+      conversationId
       updatedAt
       sender {
         id
