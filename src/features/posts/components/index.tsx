@@ -5,10 +5,10 @@ interface Props {
   posts: Post[];
 }
 
-export default async function Posts({ posts }: Props) {
+export default function Posts({ posts }: Props) {
   if (!posts?.length) {
     return <>There are no posts yet.</>;
   }
 
   return <List posts={posts} />;
-};
+}

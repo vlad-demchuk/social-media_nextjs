@@ -9,10 +9,7 @@ import { Chrome, Github, Lock, Mail, User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
-
 import { authClient } from '@/lib/auth/auth-client';
-
-// TODO: make as server component, use server actions
 
 export default function AuthPage() {
   const [name, setName] = useState('');

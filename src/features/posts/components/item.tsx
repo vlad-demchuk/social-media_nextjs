@@ -7,6 +7,7 @@ import { Post } from '@/graphql/generated/graphql';
 import { Like } from '@/features/posts/components/like';
 import { ReactNode } from 'react';
 import Link from 'next/link';
+import { PostDate } from '@/features/posts/components/post-date';
 
 interface Props {
   post: Post;
@@ -30,7 +31,7 @@ export const Item = ({ post, children }: Props) => {
                 </span>
                 <span className="text-muted-foreground text-sm">·</span>
                 <span className="text-muted-foreground text-sm">
-                  {new Date(post.createdAt).toLocaleString()}
+                  <PostDate createdAt={post.createdAt} />
                 </span>
 
                 <ThreeDotMenu

@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useActionState } from 'react';
+import { ReactNode, useActionState, useEffect, useState } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,8 +17,13 @@ interface Props {
 }
 
 export const ThreeDotMenu = ({ postUserName, onDelete, children }: Props) => {
+  const [isClient, setIsClient] = useState(false);
   const { data: session } = authClient.useSession();
   const [, formAction, isPending] = useActionState(onDelete, null);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const canDelete = session?.user.name === postUserName;
 
@@ -28,17 +33,18 @@ export const ThreeDotMenu = ({ postUserName, onDelete, children }: Props) => {
 
   const hasActions = items.length > 0;
 
+  if (!isClient || !hasActions) {
+    return null;
+  }
+
   return (
     <DropdownMenu>
-      {hasActions && (
-        <DropdownMenuTrigger
-          asChild
-          className="hover:cursor-pointer"
-        >
-          {children}
-        </DropdownMenuTrigger>
-      )}
-
+      <DropdownMenuTrigger
+        asChild
+        className="hover:cursor-pointer"
+      >
+        {children}
+      </DropdownMenuTrigger>
 
       <DropdownMenuContent>
         {items.map((item) => (
