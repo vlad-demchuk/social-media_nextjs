@@ -1,9 +1,10 @@
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Conversation, User } from '@/graphql/generated/graphql';
+import { Conversation } from '@/graphql/generated/graphql';
 import { NewConversation } from '@/features/messages/components/new-conversation';
 import { authClient } from '@/lib/auth/auth-client';
 import { getParticipant } from '@/utils/utils';
+import { SidebarListSkeleton } from './skeletons';
 
 interface Props {
   conversations: Conversation[],
@@ -16,7 +17,7 @@ export const SidebarList = ({ conversations, isLoading, selectedConversation, on
   const { data: session } = authClient.useSession();
   const currentUserId = session?.user.id ?? null;
 
-  if (isLoading) return 'Loading...';
+  if (isLoading) return <SidebarListSkeleton />;
 
   return (
     <section className="h-full">

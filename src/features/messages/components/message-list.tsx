@@ -3,6 +3,7 @@ import { GET_CONVERSATION_MESSAGES } from '@/graphql/queries/message';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { authClient } from '@/lib/auth/auth-client';
+import { MessageListSkeleton } from './skeletons';
 
 interface Props {
   conversationId: number;
@@ -20,7 +21,7 @@ export const MessageList = ({ conversationId }: Props) => {
 
 
   if (loading) {
-    return 'Loading...';
+    return <MessageListSkeleton />;
   }
 
   return (
