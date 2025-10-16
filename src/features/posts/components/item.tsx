@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { ThreeDotMenu } from '@/features/posts/components/three-dot-menu';
-import { deletePostById, likePostById, unlikePostById } from '@/lib/actions';
+import { deletePostById, likePostById, unlikePostById } from '@/features/posts/actions';
 import { Button } from '@/components/ui/button';
 import { MessageCircle, MoreHorizontal, Share } from 'lucide-react';
 import { Post } from '@/graphql/generated/graphql';

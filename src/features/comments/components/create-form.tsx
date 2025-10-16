@@ -2,7 +2,7 @@
 
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { CommentFormState, createComment } from '@/lib/actions';
+import { createComment, CommentFormState } from '@/features/comments/actions';
 import { useActionState } from 'react';
 import { Loader } from 'lucide-react';
 

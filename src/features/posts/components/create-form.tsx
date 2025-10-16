@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useActionState } from 'react';
-import { createPost, PostFormState } from '@/lib/actions';
+import { createPost, PostFormState } from '@/features/posts/actions';
 import { Loader } from 'lucide-react';
 
 export const CreateForm = () => {
