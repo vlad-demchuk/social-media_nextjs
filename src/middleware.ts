@@ -12,7 +12,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/feed', request.url));
   }
 
-  if (!sessionCookie && pathname.startsWith('/feed')) {
+  const protectedPaths = ['/feed', '/messages', '/notifications', '/users'];
+
+  if (!sessionCookie && protectedPaths.some(path => pathname.startsWith(path))) {
     return NextResponse.redirect(new URL('/auth', request.url));
   }
 
