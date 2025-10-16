@@ -3,7 +3,7 @@
 import { Heart } from 'lucide-react';
 import { useActionState, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { LikeFormState, toggleLike } from '@/lib/actions';
+import { LikeFormState, toggleLike } from '@/features/posts/actions';
 import { toast } from 'sonner';
 
 interface Props {
