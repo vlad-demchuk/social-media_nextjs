@@ -27,6 +27,7 @@ export const GET_NOTIFICATIONS = gql(`
 export const NOTIFICATION_ADDED_SUBSCRIPTION = gql(`
   subscription NotificationAdded {
     notificationAdded {
+      id
       recipientId
       actor {
         id
@@ -41,6 +42,8 @@ export const NOTIFICATION_ADDED_SUBSCRIPTION = gql(`
       entityId
       entityType
       preview
+      createdAt
+      read
     }
   }
 `)

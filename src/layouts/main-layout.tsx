@@ -7,8 +7,9 @@ import { useSubscription } from '@apollo/client/react';
 import { toast } from 'sonner';
 import { NOTIFICATION_ADDED_SUBSCRIPTION } from '@/graphql/queries/notification';
 import { GET_CONVERSATION_MESSAGES, MESSAGE_ADDED_SUBSCRIPTION } from '@/graphql/queries/message';
-import { usePathname } from 'next/navigation';
 import { authClient } from '@/lib/auth/auth-client';
+import { NotificationToast } from '@/features/notifications/components/notification-toast';
+import { MessageToast } from '@/features/messages/components/message-toast';
 
 export default function MainLayout({
   containerClassNames,
@@ -22,8 +23,11 @@ export default function MainLayout({
 
   const notificationSubscription = useSubscription(NOTIFICATION_ADDED_SUBSCRIPTION, {
     onData: ({ data }) => {
-      console.log('New notification received:', data?.data?.notificationAdded);
-      data?.data?.notificationAdded && toast(data?.data?.notificationAdded?.preview);
+      if (data?.data?.notificationAdded) {
+        const notification = data.data.notificationAdded;
+
+        toast.message(<NotificationToast notification={notification} />);
+      }
     },
   });
 
@@ -36,7 +40,7 @@ export default function MainLayout({
       if (!newMessage) return;
 
       if (newMessage.sender.id !== userId) {
-        toast(data?.data?.messageAdded.content);
+        toast(<MessageToast message={newMessage} />);
       }
 
       client.cache.updateQuery(
