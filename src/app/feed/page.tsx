@@ -1,5 +1,4 @@
-import Posts from '@/features/posts/components';
-import { CreateForm } from '@/features/posts/components/create-form';
+import { PostCreateForm, PostList } from '@/features/posts/components';
 import { query } from '@/lib/graphql/apolloClient';
 import { GET_POSTS } from '@/graphql/queries/post';
 
@@ -20,10 +19,19 @@ export default async function FeedPage() {
     throw new Error('Failed to fetch posts');
   }
 
+  if (!postsData.posts?.length) {
+    return (
+      <>
+        <PostCreateForm />
+        <div>There are no posts yet.</div>
+      </>
+    );
+  }
+
   return (
     <>
-      <CreateForm />
-      <Posts posts={postsData.posts} />
+      <PostCreateForm />
+      <PostList posts={postsData.posts} />
     </>
   );
 }

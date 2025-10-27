@@ -16,7 +16,7 @@ interface Props {
   children: ReactNode,
 }
 
-export const ThreeDotMenu = ({ postUserName, onDelete, children }: Props) => {
+export const PostThreeDotMenu = ({ postUserName, onDelete, children }: Props) => {
   const [isClient, setIsClient] = useState(false);
   const { data: session } = authClient.useSession();
   const [, formAction, isPending] = useActionState(onDelete, null);

@@ -2,7 +2,7 @@
 
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { createComment, CommentFormState } from '@/features/comments/actions';
+import { createComment, CommentFormState } from '@/features/comments/comment-actions';
 import { useActionState } from 'react';
 import { Loader } from 'lucide-react';
 
@@ -10,7 +10,7 @@ interface Props {
   postId: number;
 }
 
-export const CreateForm = ({ postId }: Props) => {
+export const CommentCreateForm = ({ postId }: Props) => {
   const initialState: CommentFormState = { message: null, errors: {} };
 
   const createPostAction = createComment.bind(null, postId);

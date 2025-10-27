@@ -1,13 +1,13 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { ThreeDotMenu } from '@/features/posts/components/three-dot-menu';
-import { deletePostById, likePostById, unlikePostById } from '@/features/posts/actions';
+import { PostThreeDotMenu } from './post-three-dot-menu';
+import { deletePostById, likePostById, unlikePostById } from '../post-actions';
 import { Button } from '@/components/ui/button';
 import { MessageCircle, MoreHorizontal, Share } from 'lucide-react';
 import { Post } from '@/graphql/generated/graphql';
-import { Like } from '@/features/posts/components/like';
+import { PostLike } from './post-like';
 import { ReactNode } from 'react';
 import Link from 'next/link';
-import { PostDate } from '@/features/posts/components/post-date';
+import { PostDate } from './post-date';
 
 interface Props {
   post: Post;
@@ -34,7 +34,7 @@ export const PostItem = ({ post, children }: Props) => {
                   <PostDate createdAt={post.createdAt} />
                 </span>
 
-                <ThreeDotMenu
+                <PostThreeDotMenu
                   postUserName={post.owner.username}
                   onDelete={deletePost}
                 >
@@ -45,7 +45,7 @@ export const PostItem = ({ post, children }: Props) => {
                   >
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
-                </ThreeDotMenu>
+                </PostThreeDotMenu>
 
               </div>
 
@@ -65,7 +65,7 @@ export const PostItem = ({ post, children }: Props) => {
                   </Button>
                 </Link>
 
-                <Like
+                <PostLike
                   postId={post.id}
                   isLiked={post.isLiked}
                   likesCount={post.likesCount}

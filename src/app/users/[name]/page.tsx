@@ -1,4 +1,4 @@
-import Posts from '@/features/posts/components';
+import { PostList } from '@/features/posts/components';
 import { query } from '@/lib/graphql/apolloClient';
 import { GET_USER_POSTS } from '@/graphql/queries/post';
 
@@ -26,7 +26,11 @@ export default async function UserPage({
         {name}
       </header>
 
-      <Posts posts={postsData.userPosts} />
+      {!postsData.userPosts?.length ? (
+        <div>There are no posts yet.</div>
+      ) : (
+        <PostList posts={postsData.userPosts} />
+      )}
     </>
   );
 }

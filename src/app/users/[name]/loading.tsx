@@ -1,7 +1,7 @@
-import { PostsSkeleton } from '@/features/posts/components/skeleton-list';
+import { PostSkeletonList } from '@/features/posts/components';
 
 export default function UserLoader() {
   return (
-    <PostsSkeleton count={1} />
+    <PostSkeletonList count={1} />
   );
 }

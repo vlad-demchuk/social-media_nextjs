@@ -2,9 +2,9 @@ import { Notification, NotificationType } from '@/graphql/generated/graphql';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
-import { PostDate } from '@/features/posts/components/post-date';
+import { PostDate } from '@/features/posts/components';
 import { NotificationText } from './notification-text';
-import { NotificationIcon } from './icon';
+import { NotificationIcon } from './notification-icon';
 
 interface NotificationItemProps {
   notification: Notification;

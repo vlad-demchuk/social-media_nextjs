@@ -1,20 +1,20 @@
 import { query } from '@/lib/graphql/apolloClient';
 import { GET_POST_COMMENTS } from '@/graphql/queries/comment';
-import { CreateForm } from '@/features/comments/components/create-form';
-import { CommentItem } from '@/features/comments/components/comment-item';
+import { CommentCreateForm } from './comment-create-form';
+import { CommentItem } from './comment-item';
 
 interface Props {
   postId: number;
 }
 
-export const List = async ({ postId }: Props) => {
+export const CommentList = async ({ postId }: Props) => {
   const { data: postCommentsData, error } = await query({ query: GET_POST_COMMENTS, variables: { postId } });
 
   if (error || !postCommentsData?.comments) return <>Something went wrong</>;
 
   return (
     <section className="mt-4 space-y-4">
-      <CreateForm postId={postId} />
+      <CommentCreateForm postId={postId} />
 
       <section className="space-y-3">
         {postCommentsData.comments.map((comment) => (

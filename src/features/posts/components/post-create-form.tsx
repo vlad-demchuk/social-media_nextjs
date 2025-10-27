@@ -5,10 +5,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useActionState } from 'react';
-import { createPost, PostFormState } from '@/features/posts/actions';
+import { createPost, PostFormState } from '@/features/posts/post-actions';
 import { Loader } from 'lucide-react';
 
-export const CreateForm = () => {
+export const PostCreateForm = () => {
   const initialState: PostFormState = { message: null, errors: {} };
 
   const [state, formAction, isPending] = useActionState(createPost, initialState);

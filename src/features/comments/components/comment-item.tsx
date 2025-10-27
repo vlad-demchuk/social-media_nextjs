@@ -1,6 +1,6 @@
 'use client';
 
-import { deleteCommentById } from '@/features/comments/actions';
+import { deleteCommentById } from '@/features/comments/comment-actions';
 import { Button } from '@/components/ui/button';
 import { Comment } from '@/graphql/generated/graphql';
 import { useActionState } from 'react';

@@ -1,11 +1,11 @@
 import { Post } from '@/graphql/generated/graphql';
-import { PostItem } from '@/features/posts/components/post-item';
+import { PostItem } from './post-item';
 
 interface Props {
   posts: Post[];
 }
 
-export const List = ({ posts }: Props) => {
+export const PostList = ({ posts }: Props) => {
   return (
     <section className="space-y-4">
       {posts.map((post) => (

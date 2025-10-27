@@ -4,7 +4,7 @@ import { Conversation } from '@/graphql/generated/graphql';
 import { NewConversation } from '@/features/messages/components/new-conversation';
 import { authClient } from '@/lib/auth/auth-client';
 import { getParticipant } from '@/utils/utils';
-import { SidebarListSkeleton } from './skeletons';
+import { SidebarListSkeleton } from './message-skeletons';
 
 interface Props {
   conversations: Conversation[],

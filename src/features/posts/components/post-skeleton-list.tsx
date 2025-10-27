@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 
-export function PostsSkeleton({ count = 3 }: { count?: number }) {
+export function PostSkeletonList({ count = 3 }: { count?: number }) {
   return (
     <div className="space-y-4">
       {Array.from({ length: count }).map((_, i) => (

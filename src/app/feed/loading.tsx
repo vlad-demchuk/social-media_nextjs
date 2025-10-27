@@ -1,5 +1,5 @@
-import { PostsSkeleton } from '@/features/posts/components/skeleton-list';
+import { PostSkeletonList } from '@/features/posts/components';
 
 export default function FeedLoader() {
-  return <PostsSkeleton />;
+  return <PostSkeletonList />;
 }

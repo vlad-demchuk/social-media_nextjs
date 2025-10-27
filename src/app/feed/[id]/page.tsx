@@ -1,8 +1,7 @@
-import { PostItem } from '@/features/posts/components/post-item';
+import { PostItem } from '@/features/posts/components';
 import { query } from '@/lib/graphql/apolloClient';
 import { GET_POST } from '@/graphql/queries/post';
-import { List as CommentList } from '@/features/comments/components/list';
-import { CommentSkeleton } from '@/features/comments/components/skeleton';
+import { CommentList, CommentSkeleton } from '@/features/comments/components';
 import { Suspense } from 'react';
 import { BackButton } from '@/components/ui/back-button';
 

@@ -3,7 +3,7 @@
 import { Heart } from 'lucide-react';
 import { useActionState, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { LikeFormState, toggleLike } from '@/features/posts/actions';
+import { LikeFormState, toggleLike } from '@/features/posts/post-actions';
 import { toast } from 'sonner';
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
   onUnlike: () => Promise<void>;
 }
 
-export const Like = ({ postId, isLiked: initialIsLiked, likesCount: initialLikesCount }: Props) => {
+export const PostLike = ({ postId, isLiked: initialIsLiked, likesCount: initialLikesCount }: Props) => {
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [likesCount, setLikesCount] = useState(initialLikesCount);
 

@@ -3,7 +3,7 @@ import { GET_CONVERSATION_MESSAGES } from '@/graphql/queries/message';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { authClient } from '@/lib/auth/auth-client';
-import { MessageListSkeleton } from './skeletons';
+import { MessageListSkeleton } from './message-skeletons';
 
 interface Props {
   conversationId: number;
