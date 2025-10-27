@@ -1,4 +1,4 @@
-import { Item as Post } from '@/features/posts/components/item';
+import { PostItem } from '@/features/posts/components/post-item';
 import { query } from '@/lib/graphql/apolloClient';
 import { GET_POST } from '@/graphql/queries/post';
 import { List as CommentList } from '@/features/comments/components/list';
@@ -27,11 +27,11 @@ export default async function PostPage({
         <BackButton />
       </div>
 
-      <Post post={postData.post}>
+      <PostItem post={postData.post}>
         <Suspense fallback={<CommentSkeleton />}>
           <CommentList postId={postId} />
         </Suspense>
-      </Post>
+      </PostItem>
     </>
   );
 }

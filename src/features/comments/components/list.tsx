@@ -1,7 +1,7 @@
 import { query } from '@/lib/graphql/apolloClient';
 import { GET_POST_COMMENTS } from '@/graphql/queries/comment';
 import { CreateForm } from '@/features/comments/components/create-form';
-import { Item } from '@/features/comments/components/item';
+import { CommentItem } from '@/features/comments/components/comment-item';
 
 interface Props {
   postId: number;
@@ -18,7 +18,7 @@ export const List = async ({ postId }: Props) => {
 
       <section className="space-y-3">
         {postCommentsData.comments.map((comment) => (
-          <Item
+          <CommentItem
             key={comment.id}
             comment={comment}
             postId={postId}

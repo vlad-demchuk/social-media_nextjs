@@ -1,5 +1,5 @@
 import { Notification } from '@/graphql/generated/graphql';
-import { NotificationItem } from './item';
+import { NotificationItem } from './notification-item';
 
 interface NotificationListProps {
   notifications: Notification[];

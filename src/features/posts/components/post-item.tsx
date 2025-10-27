@@ -14,7 +14,7 @@ interface Props {
   children?: ReactNode;
 }
 
-export const Item = ({ post, children }: Props) => {
+export const PostItem = ({ post, children }: Props) => {
   const deletePost = deletePostById.bind(null, post.id);
   const likePost = likePostById.bind(null, post.id);
   const unlikePost = unlikePostById.bind(null, post.id);

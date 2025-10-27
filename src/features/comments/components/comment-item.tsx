@@ -12,7 +12,7 @@ interface Props {
   postId: number,
 }
 
-export const Item = ({ comment, postId }: Props) => {
+export const CommentItem = ({ comment, postId }: Props) => {
   const { data: session } = authClient.useSession();
   const [, formAction, isPending] = useActionState(deleteCommentById, null);
 
