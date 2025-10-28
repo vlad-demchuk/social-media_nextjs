@@ -1,14 +1,11 @@
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
 import { MessageSquarePlus } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { useState } from 'react';
-import { useLazyQuery, useMutation } from '@apollo/client/react';
-import { CREATE_CONVERSATION, GET_CONVERSATIONS } from '@/graphql/queries/conversation';
-import { SEARCH_USER } from '@/graphql/queries/user';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Conversation } from '@/graphql/generated/graphql';
+import { useMutation } from '@apollo/client/react';
+import { CREATE_CONVERSATION } from '@/graphql/queries/conversation';
+import { Conversation, CreateConversationMutation } from '@/graphql/generated/graphql';
+import { UserSearchWithAction } from '@/components/user-search-with-action';
 
 interface Props {
   onConversationSelect: (conversation: Conversation) => void;
@@ -16,26 +13,15 @@ interface Props {
 
 export const NewConversation = ({ onConversationSelect }: Props) => {
   const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState('');
-  const [searchUsers, { data, loading }] = useLazyQuery(SEARCH_USER);
-  const [createConversation, { loading: creating }] = useMutation(CREATE_CONVERSATION);
-
-  const handleSearch = (value: string) => {
-    setSearch(value);
-    if (value.length > 1) {
-      searchUsers({ variables: { query: value } });
-    }
-  };
+  const [createConversation, { loading: creating }] = useMutation<CreateConversationMutation>(CREATE_CONVERSATION);
 
   const handleCreate = async (userId: number) => {
     const response = await createConversation({ variables: { userId } });
-    if (response?.data?.createConversation.success) {
-      // TODO: Change response to return conversation in proper format
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      onConversationSelect(response?.data?.createConversation?.conversation);
+    const conversation = response?.data?.createConversation?.conversation;
+    
+    if (response?.data?.createConversation.success && conversation) {
+      onConversationSelect(conversation);
       setOpen(false);
-      setSearch('');
     }
   };
 
@@ -55,47 +41,12 @@ export const NewConversation = ({ onConversationSelect }: Props) => {
       </PopoverTrigger>
 
       <PopoverContent className="w-72 p-3">
-        <div className="space-y-2">
-          <Input
-            placeholder="Search users..."
-            value={search}
-            onChange={(e) => handleSearch(e.target.value)}
-          />
-
-          <ScrollArea className="h-64">
-            {loading ? (
-              <p className="text-sm text-muted-foreground px-2">Searching...</p>
-            ) : data?.searchUser.length ? (
-              <ul className="divide-y divide-muted">
-                {data.searchUser.map((user) => (
-                  <li
-                    key={user.id}
-                    className="flex items-center justify-between py-2 px-2 hover:bg-accent rounded-lg cursor-pointer"
-                    onClick={() => handleCreate(user.id)}
-                  >
-                    <div className="flex items-center gap-2">
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage src={user.image || undefined} />
-                        <AvatarFallback>{user.username[0]}</AvatarFallback>
-                      </Avatar>
-                      <span className="text-sm">{user.username}</span>
-                    </div>
-                    <Button
-                      size="sm"
-                      disabled={creating}
-                    >
-                      Chat
-                    </Button>
-                  </li>
-                ))}
-              </ul>
-            ) : search.length > 1 ? (
-              <p className="text-sm text-muted-foreground px-2">No users found.</p>
-            ) : (
-              <p className="text-sm text-muted-foreground px-2">Type to search...</p>
-            )}
-          </ScrollArea>
-        </div>
+        <UserSearchWithAction
+          onUserSelect={handleCreate}
+          placeholder="Search users..."
+          actionLabel="Chat"
+          actionLoading={creating}
+        />
       </PopoverContent>
     </Popover>
   );
