@@ -1,77 +1,14 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Chrome, Github, Lock, Mail, User } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { SignInForm, SignUpForm, SocialAuthButtons } from '@/features/auth/components';
+import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useState } from 'react';
-import { toast } from 'sonner';
-import { authClient } from '@/lib/auth/auth-client';
 
 export default function AuthPage() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [activeTab, setActiveTab] = useState<'signin' | 'signup'>('signin');
-
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-
-  const handleAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    const cyrillicPattern = /[\u0400-\u04FF]/;
-
-    if (cyrillicPattern.test(name)) {
-      toast.error('Cyrillic characters are not allowed. Please use Latin characters.');
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      if (activeTab === 'signin') {
-        await authClient.signIn.email({
-          email,
-          password,
-          callbackURL: '/feed',
-          fetchOptions: {
-            onError: (ctx) => {
-              toast.error(ctx.error.message);
-            },
-            onSuccess: async () => {
-              toast.success('Signed in successfully');
-            },
-          },
-        });
-      } else {
-        await authClient.signUp.email({
-          email,
-          name,
-          password,
-          fetchOptions: {
-            onError: (ctx) => {
-              toast.error(ctx.error.message);
-            },
-            onSuccess: async () => {
-              toast.success('Account created');
-              router.push('/feed');
-            },
-          },
-        });
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleSocialAuth = (provider: string) => {
-    toast.error(`${provider} Sign In`, {
-      description: 'Social authentication would be implemented here.',
-    });
-  };
+  const { signIn, signUp, handleSocialAuth, isLoading } = useAuth();
 
   return (
     <div className="min-h-screen flex">
@@ -112,163 +49,24 @@ export default function AuthPage() {
                   <TabsTrigger value="signup">Sign Up</TabsTrigger>
                 </TabsList>
 
-                <TabsContent
-                  value="signin"
-                  className="space-y-4"
-                >
-                  <form
-                    onSubmit={handleAuth}
-                    className="space-y-4"
-                  >
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          id="email"
-                          type="email"
-                          placeholder="Enter your email"
-                          className="pl-10"
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="password">Password</Label>
-                      <div className="relative">
-                        <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          id="password"
-                          type="password"
-                          placeholder="Enter your password"
-                          className="pl-10"
-                          required
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                    <Button
-                      type="submit"
-                      className="w-full"
-                      disabled={isLoading}
-                      variant="default"
-                    >
-                      {isLoading ? 'Signing in...' : 'Sign In'}
-                    </Button>
-                  </form>
+                <TabsContent value="signin" className="space-y-4">
+                  <SignInForm onSubmit={signIn} isLoading={isLoading} />
                 </TabsContent>
 
-                <TabsContent
-                  value="signup"
-                  className="space-y-4"
-                >
-                  <form
-                    onSubmit={handleAuth}
-                    className="space-y-4"
-                  >
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Full Name</Label>
-                      <div className="relative">
-                        <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          id="name"
-                          type="text"
-                          placeholder="Enter your full name"
-                          className="pl-10"
-                          required
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="signup-email">Email</Label>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          id="signup-email"
-                          type="email"
-                          placeholder="Enter your email"
-                          className="pl-10"
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="signup-password">Password</Label>
-                      <div className="relative">
-                        <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          id="signup-password"
-                          type="password"
-                          placeholder="Create a password"
-                          className="pl-10"
-                          required
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                    <Button
-                      type="submit"
-                      className="w-full"
-                      disabled={isLoading}
-                      variant="default"
-                    >
-                      {isLoading ? 'Creating account...' : 'Create Account'}
-                    </Button>
-                  </form>
+                <TabsContent value="signup" className="space-y-4">
+                  <SignUpForm onSubmit={signUp} isLoading={isLoading} />
                 </TabsContent>
               </Tabs>
 
-              <div className="relative my-6">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-card px-2 text-muted-foreground">
-                    Or continue with
-                  </span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <Button
-                  variant="outline"
-                  onClick={() => handleSocialAuth('Google')}
-                  className="w-full"
-                >
-                  <Chrome className="mr-2 h-4 w-4" />
-                  Google
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => handleSocialAuth('GitHub')}
-                  className="w-full"
-                >
-                  <Github className="mr-2 h-4 w-4" />
-                  GitHub
-                </Button>
-              </div>
+              <SocialAuthButtons onSocialAuth={handleSocialAuth} />
 
               <p className="text-center text-sm text-muted-foreground mt-6">
                 By continuing, you agree to our{' '}
-                <a
-                  href="#"
-                  className="text-primary hover:underline"
-                >
+                <a href="#" className="text-primary hover:underline">
                   Terms of Service
                 </a>{' '}
                 and{' '}
-                <a
-                  href="#"
-                  className="text-primary hover:underline"
-                >
+                <a href="#" className="text-primary hover:underline">
                   Privacy Policy
                 </a>
                 .
