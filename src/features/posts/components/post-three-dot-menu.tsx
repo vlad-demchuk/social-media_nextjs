@@ -22,6 +22,7 @@ export const PostThreeDotMenu = ({ postUserName, onDelete, children }: Props) =>
   const [, formAction, isPending] = useActionState(onDelete, null);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional: standard client-only rendering pattern to avoid hydration mismatch
     setIsClient(true);
   }, []);
 
