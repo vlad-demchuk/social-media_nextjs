@@ -14,9 +14,9 @@ export interface CommentFormState {
 
 const CreateCommentFormSchema = z.object({
   content: z
-    .string({ invalid_type_error: 'Please fill in the comment content.' })
+    .string({ error: 'Please fill in the comment content.' })
     .trim()
-    .min(1, { message: 'Please fill in the comment content.' }),
+    .min(1, { error: 'Please fill in the comment content.' }),
 });
 
 export const createComment = async (

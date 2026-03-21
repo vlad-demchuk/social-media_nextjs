@@ -22,9 +22,9 @@ export interface LikeFormState {
 
 const CreatePostFormSchema = z.object({
   content: z
-    .string({ invalid_type_error: 'Please fill in the post content.' })
+    .string({ error: 'Please fill in the post content.' })
     .trim()
-    .min(1, { message: 'Please fill in the post content.' }),
+    .min(1, { error: 'Please fill in the post content.' }),
 });
 
 export const createPost = async (

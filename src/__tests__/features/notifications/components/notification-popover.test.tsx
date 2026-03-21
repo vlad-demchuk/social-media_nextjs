@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import * as apolloReact from '@apollo/client/react';
 import { NotificationPopover } from '@/features/notifications/components/notification-popover';
 import { NotificationType } from '@/graphql/generated/graphql';
 
@@ -125,13 +126,13 @@ describe('NotificationPopover with notifications', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    jest.spyOn(require('@apollo/client/react'), 'useLazyQuery').mockReturnValue([
-      mockFetchNotifications,
+    jest.spyOn(apolloReact, 'useLazyQuery').mockReturnValue([
+      mockFetchNotifications as never,
       {
         data: { notifications: [mockNotification] },
         loading: false,
         error: undefined,
-      },
+      } as never,
     ]);
   });
 
@@ -163,9 +164,9 @@ describe('NotificationPopover loading and error states', () => {
   });
 
   test('shows loading state', async () => {
-    jest.spyOn(require('@apollo/client/react'), 'useLazyQuery').mockReturnValue([
-      mockFetchNotifications,
-      { data: null, loading: true, error: undefined },
+    jest.spyOn(apolloReact, 'useLazyQuery').mockReturnValue([
+      mockFetchNotifications as never,
+      { data: null, loading: true, error: undefined } as never,
     ]);
 
     const user = userEvent.setup();
@@ -178,9 +179,9 @@ describe('NotificationPopover loading and error states', () => {
   });
 
   test('shows error state', async () => {
-    jest.spyOn(require('@apollo/client/react'), 'useLazyQuery').mockReturnValue([
-      mockFetchNotifications,
-      { data: null, loading: false, error: new Error('Network error') },
+    jest.spyOn(apolloReact, 'useLazyQuery').mockReturnValue([
+      mockFetchNotifications as never,
+      { data: null, loading: false, error: new Error('Network error') } as never,
     ]);
 
     const user = userEvent.setup();
@@ -193,9 +194,9 @@ describe('NotificationPopover loading and error states', () => {
   });
 
   test('shows empty state when data is loaded but empty', async () => {
-    jest.spyOn(require('@apollo/client/react'), 'useLazyQuery').mockReturnValue([
-      mockFetchNotifications,
-      { data: { notifications: [] }, loading: false, error: undefined },
+    jest.spyOn(apolloReact, 'useLazyQuery').mockReturnValue([
+      mockFetchNotifications as never,
+      { data: { notifications: [] }, loading: false, error: undefined } as never,
     ]);
 
     const user = userEvent.setup();
@@ -216,9 +217,9 @@ describe('NotificationPopover limits to 5 notifications', () => {
       actor: { ...mockNotification.actor, username: `user${i + 1}` },
     }));
 
-    jest.spyOn(require('@apollo/client/react'), 'useLazyQuery').mockReturnValue([
-      mockFetchNotifications,
-      { data: { notifications }, loading: false, error: undefined },
+    jest.spyOn(apolloReact, 'useLazyQuery').mockReturnValue([
+      mockFetchNotifications as never,
+      { data: { notifications }, loading: false, error: undefined } as never,
     ]);
 
     const user = userEvent.setup();
