@@ -1,7 +1,8 @@
 'use client';
 
-import { Bell, LogOut, User } from 'lucide-react';
+import { LogOut, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { NotificationPopover } from '@/features/notifications/components';
 import { UserSearchPopover } from '@/components/user-search-popover';
 import {
   DropdownMenu,
@@ -15,7 +16,15 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import Link from 'next/link';
 
-export const AppHeader = () => {
+interface AppHeaderProps {
+  notificationCount?: number;
+  onNotificationOpen?: () => void;
+}
+
+export const AppHeader = ({
+  notificationCount = 0,
+  onNotificationOpen = () => {},
+}: AppHeaderProps) => {
   const router = useRouter();
   const { data: session } = authClient.useSession();
 
@@ -43,12 +52,10 @@ export const AppHeader = () => {
           </div>
 
           <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="icon"
-            >
-              <Bell className="h-5 w-5" />
-            </Button>
+            <NotificationPopover
+              notificationCount={notificationCount}
+              onOpen={onNotificationOpen}
+            />
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

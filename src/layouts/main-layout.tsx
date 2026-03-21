@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { AppHeader } from '@/components/app-header';
 import { Navigation } from '@/components/navigation';
 import { cn } from '@/lib/utils';
@@ -20,18 +21,20 @@ export default function MainLayout({
 }>) {
   const { data: session } = authClient.useSession();
   const userId = session?.user.id ? Number(session?.user.id) : null;
+  const [notificationCount, setNotificationCount] = useState(0);
 
-  const notificationSubscription = useSubscription(NOTIFICATION_ADDED_SUBSCRIPTION, {
+  useSubscription(NOTIFICATION_ADDED_SUBSCRIPTION, {
     onData: ({ data }) => {
       if (data?.data?.notificationAdded) {
         const notification = data.data.notificationAdded;
 
+        setNotificationCount(prev => prev + 1);
         toast.message(<NotificationToast notification={notification} />);
       }
     },
   });
 
-  const messageSubscription = useSubscription(MESSAGE_ADDED_SUBSCRIPTION, {
+  useSubscription(MESSAGE_ADDED_SUBSCRIPTION, {
     // skip: pathname === '/messages',
     onData: ({ data, client }) => {
       console.log('New message received:', data?.data?.messageAdded);
@@ -70,7 +73,10 @@ export default function MainLayout({
       )}
     >
       {/* Top Navigation */}
-      <AppHeader />
+      <AppHeader
+        notificationCount={notificationCount}
+        onNotificationOpen={() => setNotificationCount(0)}
+      />
 
       {/* Middle Zone */}
       <div className="max-w-7xl row w-full mx-auto lg:px-8 overflow-y-auto lg:overflow-y-visible">
